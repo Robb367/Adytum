@@ -1,0 +1,6 @@
+@Adytum.API_HostAddress = http://localhost:5201
+
+GET {{Adytum.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
