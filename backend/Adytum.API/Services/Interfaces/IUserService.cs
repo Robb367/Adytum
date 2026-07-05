@@ -4,5 +4,6 @@ namespace Adytum.API.Services.Interfaces;
 
 public interface IUserService
 {
-    Task RegisterUserAsync(RegisterUserRequest request);
+    Task<RegisterUserResponse> RegisterUserAsync(RegisterUserRequest request);
+    Task<LoginResponse> LoginAsync(LoginRequest request);
 }

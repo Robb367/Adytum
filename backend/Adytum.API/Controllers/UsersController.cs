@@ -18,8 +18,40 @@ public class UsersController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterUserRequest request)
     {
-        await _userService.RegisterUserAsync(request);
+        if (!ModelState.IsValid)
+    {
+        return BadRequest(ModelState);
+    }
 
-        return Created();
+        var result = await _userService.RegisterUserAsync(request);
+
+        if (!result.Success)
+        {
+            return Conflict(result.Message);
+        }
+
+        return Created(string.Empty, new 
+        { 
+            message = result.Message
+        });
+
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginRequest request)
+    {
+        if (!ModelState.IsValid)
+    {
+        return BadRequest(ModelState);
+    }
+
+        var result = await _userService.LoginAsync(request);
+
+        if (!result.Success)
+        {
+            return Unauthorized(result);
+        }
+
+        return Ok(result);
     }
 }

@@ -20,6 +20,7 @@ i_Il sistema deve mostrare dei grafici sugli utenti più affidabili, i titoli pi
 j_Il sistema deve avere un sistema di recensioni in modo da permettere agli utenti di rivolgersi a chi ritengono più affidabile
 
 #3 - Requisiti non funzionali
+
 a_L'app dev'essere intuitiva e fluida
 b_L'app deve essere moderna e con un design che si allinei al suo scopo
 c_Le password devono essere salvate in modo sicuro, usando metodi di cifratura sicuri

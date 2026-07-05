@@ -1,5 +1,8 @@
 namespace Adytum.API.Models;
+using Microsoft.EntityFrameworkCore;
 
+[Index(nameof(Email), IsUnique = true)]
+[Index(nameof(Username), IsUnique = true)]
 public class User
 {
     public int Id { get; set; }
