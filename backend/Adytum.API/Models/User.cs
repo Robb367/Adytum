@@ -20,4 +20,5 @@ public class User
     public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
     public bool IsActive { get; set; } = true;
     public bool IsPublicProfile { get; set; } = true;
+    public ICollection<BookCopy> BookCopies { get; set; } = new List<BookCopy>();
 }
