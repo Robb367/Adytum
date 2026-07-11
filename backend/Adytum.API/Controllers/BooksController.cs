@@ -24,4 +24,14 @@ public class BooksController : ControllerBase
 
         return Ok("Libro aggiunto alla libreria!");
     }
+
+    [HttpGet("mylibrary")]
+    public async Task<IActionResult> GetMyLibrary()
+    {
+        const int ownerId = 1; // Temporaneo
+
+        var books = await _bookService.GetMyLibraryAsync(ownerId);
+
+        return Ok(books);
+    }
 }

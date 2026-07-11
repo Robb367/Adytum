@@ -51,4 +51,21 @@ public class BookService : IBookService
 
     _context.BookCopies.Add(bookCopy);
     await _context.SaveChangesAsync();
+}
+
+public async Task<List<MyLibrary>> GetMyLibraryAsync(int ownerId)
+{
+    return await _context.BookCopies
+        .Where(c => c.OwnerId == ownerId)
+        .Include(c => c.Book)
+        .Select(c => new MyLibrary
+        {
+            BookCopyId = c.Id,
+            Title = c.Book.Title,
+            Author = c.Book.Author,
+            ISBN = c.Book.ISBN,
+            AvailableForLoan = c.AvailableForLoan,
+            Condition = c.Condition
+        })
+        .ToListAsync();
 }}

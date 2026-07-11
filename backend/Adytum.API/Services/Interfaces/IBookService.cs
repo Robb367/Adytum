@@ -7,4 +7,6 @@ public interface IBookService
     Task AddBookToLibraryAsync(
         AddBookToLibrary request,
         int ownerId);
+
+    Task<List<MyLibrary>> GetMyLibraryAsync(int ownerId);
 }
