@@ -68,4 +68,27 @@ public async Task<List<MyLibrary>> GetMyLibraryAsync(int ownerId)
             Condition = c.Condition
         })
         .ToListAsync();
-}}
+}
+
+    public async Task<List<SearchBookResult>> SearchBooksAsync(string query)
+    {
+        return await _context.BookCopies
+    .Include(c => c.Book)
+    .Include(c => c.Owner)
+    .Where(c =>
+        c.Book.Title.Contains(query) ||
+        c.Book.Author.Contains(query))
+    .Select(c => new SearchBookResult
+    {
+        BookCopyId = c.Id,
+        Title = c.Book.Title,
+        Author = c.Book.Author,
+        CoverImageUrl = c.Book.CoverImageUrl,
+        OwnerDisplayName = c.Owner.DisplayName,
+        City = c.Owner.City,
+        AvailableForLoan = c.AvailableForLoan,
+        Condition = c.Condition
+    })
+    .ToListAsync();
+    }
+}

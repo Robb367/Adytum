@@ -9,11 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AdytumDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IBookService, BookService>();
+        builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<IBookLookupService, OpenLibraryBookLookupService>();
+        builder.Services.AddControllers();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+        builder.Services.AddScoped<IBookService, BookService>();
+        builder.Services.AddHttpClient();
 
 var app = builder.Build();
 

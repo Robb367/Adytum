@@ -10,9 +10,12 @@ public class BooksController : ControllerBase
 {
     private readonly IBookService _bookService;
 
-    public BooksController(IBookService bookService)
+    public BooksController(
+    IBookService bookService,
+    IBookLookupService bookLookupService)
     {
         _bookService = bookService;
+        _bookLookupService = bookLookupService;
     }
 
     [HttpPost("add")]
@@ -34,4 +37,26 @@ public class BooksController : ControllerBase
 
         return Ok(books);
     }
+
+    [HttpGet("search")]
+    public async Task<IActionResult> SearchBooks(string query)
+    {
+        var results = await _bookService.SearchBooksAsync(query);
+
+        return Ok(results);
+    }
+
+    [HttpGet("lookup/{isbn}")]
+    public async Task<IActionResult> LookupBook(string isbn)
+    {
+        var book = await _bookLookupService.GetBookByIsbnAsync(isbn);
+
+        if (book == null)
+        {
+            return NotFound("Libro non trovato.");
+        }
+
+        return Ok(book);
+    }
+    private readonly IBookLookupService _bookLookupService;
 }
