@@ -1,4 +1,5 @@
 namespace Adytum.API.DTOs.Books;
+
 using Adytum.API.Models;
 
 public class AddBookToLibrary

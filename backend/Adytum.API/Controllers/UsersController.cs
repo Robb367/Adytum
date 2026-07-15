@@ -19,9 +19,9 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> Register(RegisterUserRequest request)
     {
         if (!ModelState.IsValid)
-    {
-        return BadRequest(ModelState);
-    }
+        {
+            return BadRequest(ModelState);
+        }
 
         var result = await _userService.RegisterUserAsync(request);
 
@@ -30,8 +30,8 @@ public class UsersController : ControllerBase
             return Conflict(result.Message);
         }
 
-        return Created(string.Empty, new 
-        { 
+        return Created(string.Empty, new
+        {
             message = result.Message
         });
 
@@ -41,9 +41,9 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> Login(LoginRequest request)
     {
         if (!ModelState.IsValid)
-    {
-        return BadRequest(ModelState);
-    }
+        {
+            return BadRequest(ModelState);
+        }
 
         var result = await _userService.LoginAsync(request);
 

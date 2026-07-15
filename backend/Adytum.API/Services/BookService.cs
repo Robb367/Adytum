@@ -16,9 +16,9 @@ public class BookService : IBookService
     }
 
     public async Task AddBookToLibraryAsync(AddBookToLibrary request, int ownerId)
-{
-    var book = await _context.Books
-        .FirstOrDefaultAsync(b => b.ISBN == request.ISBN);
+    {
+        var book = await _context.Books
+            .FirstOrDefaultAsync(b => b.ISBN == request.ISBN);
         if (book == null)
         {
             book = new Book
@@ -39,36 +39,36 @@ public class BookService : IBookService
             _context.Books.Add(book);
         }
 
-    var bookCopy = new BookCopy
-    {
-        Book = book,
-        OwnerId = ownerId,
-        Condition = request.Condition,
-        AvailableForLoan = request.AvailableForLoan,
-        PersonalNotes = request.PersonalNotes,
-        CreatedAt = DateTime.UtcNow
-    };
-
-    _context.BookCopies.Add(bookCopy);
-    await _context.SaveChangesAsync();
-}
-
-public async Task<List<MyLibrary>> GetMyLibraryAsync(int ownerId)
-{
-    return await _context.BookCopies
-        .Where(c => c.OwnerId == ownerId)
-        .Include(c => c.Book)
-        .Select(c => new MyLibrary
+        var bookCopy = new BookCopy
         {
-            BookCopyId = c.Id,
-            Title = c.Book.Title,
-            Author = c.Book.Author,
-            ISBN = c.Book.ISBN,
-            AvailableForLoan = c.AvailableForLoan,
-            Condition = c.Condition
-        })
-        .ToListAsync();
-}
+            Book = book,
+            OwnerId = ownerId,
+            Condition = request.Condition,
+            AvailableForLoan = request.AvailableForLoan,
+            PersonalNotes = request.PersonalNotes,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.BookCopies.Add(bookCopy);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<List<MyLibrary>> GetMyLibraryAsync(int ownerId)
+    {
+        return await _context.BookCopies
+            .Where(c => c.OwnerId == ownerId)
+            .Include(c => c.Book)
+            .Select(c => new MyLibrary
+            {
+                BookCopyId = c.Id,
+                Title = c.Book.Title,
+                Author = c.Book.Author,
+                ISBN = c.Book.ISBN,
+                AvailableForLoan = c.AvailableForLoan,
+                Condition = c.Condition
+            })
+            .ToListAsync();
+    }
 
     public async Task<List<SearchBookResult>> SearchBooksAsync(string query)
     {

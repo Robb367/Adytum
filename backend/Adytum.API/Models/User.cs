@@ -1,4 +1,5 @@
 namespace Adytum.API.Models;
+
 using Microsoft.EntityFrameworkCore;
 
 [Index(nameof(Email), IsUnique = true)]

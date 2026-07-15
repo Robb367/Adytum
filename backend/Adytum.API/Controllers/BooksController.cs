@@ -1,10 +1,13 @@
 using Adytum.API.DTOs.Books;
 using Adytum.API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Adytum.API.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class BooksController : ControllerBase
 {
@@ -21,7 +24,14 @@ public class BooksController : ControllerBase
     [HttpPost("add")]
     public async Task<IActionResult> AddBook(AddBookToLibrary request)
     {
-        const int ownerId = 1; // temporaneo
+        var ownerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (ownerIdClaim == null)
+        {
+            return Unauthorized("Utente non autenticato.");
+        }
+
+        var ownerId = int.Parse(ownerIdClaim);
 
         await _bookService.AddBookToLibraryAsync(request, ownerId);
 

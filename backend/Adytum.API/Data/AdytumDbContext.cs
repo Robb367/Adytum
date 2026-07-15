@@ -17,7 +17,7 @@ public class AdytumDbContext : DbContext
     public DbSet<BookCopy> BookCopies { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
+    {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Book>()
         .HasMany(b => b.Copies)
@@ -29,4 +29,5 @@ public class AdytumDbContext : DbContext
         .WithOne(b => b.Owner)
         .HasForeignKey(b => b.OwnerId);
 
-}}
+    }
+}
