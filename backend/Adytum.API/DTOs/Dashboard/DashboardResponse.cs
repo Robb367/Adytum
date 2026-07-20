@@ -1,3 +1,4 @@
+namespace Adytum.API.DTOs.Dashboard;
 public class DashboardResponse
 {
     public int TotalBooks { get; set; }
@@ -11,4 +12,8 @@ public class DashboardResponse
     public int PendingSentRequests { get; set; }
 
     public List<RecentBookDto> RecentBooks { get; set; } = new();
+
+    public string DisplayName { get; set; } = string.Empty;
+
+    public int TotalLoansCompleted { get; set; }
 }

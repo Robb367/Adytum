@@ -3,6 +3,7 @@ using Adytum.API.Models;
 
 namespace Adytum.API.Services.Interfaces;
 
+
 public interface ILoanService
 {
     Task<LoanResponse> RequestLoanAsync(LoanRequest request, int borrowerId);

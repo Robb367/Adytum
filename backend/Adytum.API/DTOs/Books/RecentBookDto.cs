@@ -1,3 +1,4 @@
+namespace Adytum.API.DTOs.Dashboard;
 public class RecentBookDto
 {
     public int BookCopyId { get; set; }

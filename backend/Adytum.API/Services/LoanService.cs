@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Adytum.API.Services;
 
-
 public class LoanService : ILoanService
 {
     private readonly AdytumDbContext _context;
