@@ -23,17 +23,17 @@ public class LoanService : ILoanService
 
         if (bookCopy == null)
         {
-            throw new Exception("Libro non trovato.");
+            throw new NotFoundException("Libro non trovato.");
         }
 
         if (!bookCopy.AvailableForLoan)
         {
-            throw new Exception("Questo libro non è disponibile per il prestito.");
+            throw new BusinessRuleException("Questo libro non è disponibile per il prestito.");
         }
 
         if (bookCopy.OwnerId == borrowerId)
         {
-            throw new Exception("Non puoi richiedere un prestito per un libro che possiedi.");
+            throw new BusinessRuleException("Non puoi richiedere un prestito per un libro che possiedi.");
         }
 
         var existingLoan = await _context.Loans.AnyAsync(l =>
@@ -118,21 +118,33 @@ public class LoanService : ILoanService
 
         if (loan == null)
         {
-            throw new Exception("Richiesta di prestito non trovata.");
+            throw new NotFoundException("Richiesta di prestito non trovata.");
         }
 
         if (loan.LenderId != lenderId)
         {
-            throw new Exception("Non sei autorizzato ad accettare questo prestito.");
+            throw new UnauthorizedException("Non sei autorizzato ad accettare questo prestito.");
         }
 
         if (loan.Status != LoanStatus.Pending)
         {
-            throw new Exception("Questa richiesta è già stata gestita.");
+            throw new BusinessRuleException("Questa richiesta è già stata gestita.");
         }
 
         loan.Status = LoanStatus.Accepted;
         loan.AcceptedDate = DateTime.UtcNow;
+
+        var otherRequests = await _context.Loans
+    .Where(l =>
+        l.BookCopyId == loan.BookCopyId &&
+        l.Id != loan.Id &&
+        l.Status == LoanStatus.Pending)
+    .ToListAsync();
+
+        foreach (var request in otherRequests)
+        {
+            request.Status = LoanStatus.Rejected;
+        }
 
         loan.BookCopy.AvailableForLoan = false;
 
@@ -146,17 +158,17 @@ public class LoanService : ILoanService
 
         if (loan == null)
         {
-            throw new Exception("Richiesta di prestito non trovata.");
+            throw new NotFoundException("Richiesta di prestito non trovata.");
         }
 
         if (loan.LenderId != lenderId)
         {
-            throw new Exception("Non sei autorizzato a rifiutare questo prestito.");
+            throw new UnauthorizedException("Non sei autorizzato a rifiutare questo prestito.");
         }
 
         if (loan.Status != LoanStatus.Pending)
         {
-            throw new Exception("Questa richiesta è già stata gestita.");
+            throw new BusinessRuleException("Questa richiesta è già stata gestita.");
         }
 
         loan.Status = LoanStatus.Rejected;
@@ -171,17 +183,17 @@ public class LoanService : ILoanService
 
         if (loan == null)
         {
-            throw new Exception("Prestito non trovato.");
+            throw new NotFoundException("Prestito non trovato.");
         }
 
         if (loan.LenderId != lenderId)
         {
-            throw new Exception("Non sei autorizzato a registrare la restituzione di questo libro.");
+            throw new UnauthorizedException("Non sei autorizzato a registrare la restituzione di questo libro.");
         }
 
         if (loan.Status != LoanStatus.Accepted)
         {
-            throw new Exception("Questo prestito non può essere restituito.");
+            throw new BusinessRuleException("Questo prestito non può essere restituito.");
         }
 
         loan.Status = LoanStatus.Returned;
