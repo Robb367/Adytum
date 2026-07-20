@@ -41,7 +41,14 @@ public class BooksController : ControllerBase
     [HttpGet("mylibrary")]
     public async Task<IActionResult> GetMyLibrary()
     {
-        const int ownerId = 1; // Temporaneo
+        var ownerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (ownerIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        int ownerId = int.Parse(ownerIdClaim);
 
         var books = await _bookService.GetMyLibraryAsync(ownerId);
 

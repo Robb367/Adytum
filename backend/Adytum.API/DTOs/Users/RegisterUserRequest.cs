@@ -18,8 +18,8 @@ public class RegisterUserRequest
     )]
     public string Password { get; set; } = string.Empty;
 
-    [Required]
     [StringLength(100)]
-    public string DisplayName { get; set; } = string.Empty;
+    public string? DisplayName { get; set; } = string.Empty;
+
 }
 

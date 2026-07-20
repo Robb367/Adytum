@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Adytum.API.Middleware;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -69,6 +70,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<ILoanService, LoanService>();
 builder.Services.AddHttpClient();
 
 var app = builder.Build();
@@ -79,8 +81,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();

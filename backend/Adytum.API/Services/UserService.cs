@@ -93,7 +93,9 @@ public class UserService : IUserService
 
             Username = request.Username,
             Email = request.Email,
-            DisplayName = request.DisplayName,
+            DisplayName = string.IsNullOrWhiteSpace(request.DisplayName)
+                ? request.Username
+                : request.DisplayName,
 
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
 

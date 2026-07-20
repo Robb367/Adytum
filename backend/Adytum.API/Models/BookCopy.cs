@@ -19,4 +19,6 @@ public class BookCopy
     public string PersonalNotes { get; set; } = string.Empty;
 
     public DateTime CreatedAt { get; set; }
+
+    public ICollection<Loan> Loans { get; set; } = new List<Loan>();
 }
