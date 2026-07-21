@@ -2,6 +2,8 @@ using Adytum.API.Data;
 using Adytum.API.Models;
 using Adytum.API.Services.Interfaces;
 using Adytum.API.DTOs.Books;
+using Adytum.API.Helpers;
+using Adytum.API.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Adytum.API.Services;
@@ -90,5 +92,68 @@ public class BookService : IBookService
         Condition = c.Condition
     })
     .ToListAsync();
+    }
+
+    public async Task<List<BooksNearby>> SearchNearbyBooksAsync(
+    string query,
+    int userId)
+{
+    query = query.Trim();
+
+    if (string.IsNullOrWhiteSpace(query))
+    {
+        return new List<BooksNearby>();
+    }
+
+    var user = await _context.Users.FindAsync(userId);
+
+        if (user == null)
+            throw new NotFoundException("Utente non trovato.");
+
+        var bookCopies = await _context.BookCopies
+            .Include(c => c.Book)
+            .Include(c => c.Owner)
+            .Where(c =>
+                c.AvailableForLoan &&
+                (
+                    c.Book.Title.Contains(query) ||
+                    c.Book.Author.Contains(query)
+                ))
+            .ToListAsync();
+
+        var results = new List<BooksNearby>();
+
+        foreach (var copy in bookCopies)
+        {
+            // Evita di mostrare i propri libri
+            if (copy.OwnerId == userId)
+                continue;
+
+            var distance = GeoHelper.CalculateDistanceKm(
+                user.Latitude,
+                user.Longitude,
+                copy.Owner.Latitude,
+                copy.Owner.Longitude);
+
+            if (distance <= user.SearchRadiusKm)
+            {
+                results.Add(new BooksNearby
+                {
+                    BookCopyId = copy.Id,
+                    Title = copy.Book.Title,
+                    Author = copy.Book.Author,
+                    CoverImageUrl = copy.Book.CoverImageUrl,
+                    OwnerDisplayName = copy.Owner.DisplayName,
+                    City = copy.Owner.City,
+                    Province = copy.Owner.Province,
+                    DistanceKm = Math.Round(distance, 2),
+                    AvailableForLoan = copy.AvailableForLoan
+                });
+            }
+        }
+
+        return results
+            .OrderBy(b => b.DistanceKm)
+            .ToList();
     }
 }

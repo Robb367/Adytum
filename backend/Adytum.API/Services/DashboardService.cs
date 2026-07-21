@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Adytum.API.Services.Interfaces;
 
 namespace Adytum.API.Services;
+
 public class DashboardService : IDashboardService
 {
     private readonly AdytumDbContext _context;
@@ -58,6 +59,11 @@ public class DashboardService : IDashboardService
                 l.LenderId == userId &&
                 l.Status == LoanStatus.Returned);
 
+        var displayName = await _context.Users
+                    .Where(u => u.Id == userId)
+                    .Select(u => u.DisplayName)
+                    .FirstOrDefaultAsync() ?? string.Empty;
+
         return new DashboardResponse
         {
             TotalBooks = totalBooks,
@@ -66,7 +72,8 @@ public class DashboardService : IDashboardService
             PendingReceivedRequests = pendingReceived,
             PendingSentRequests = pendingSent,
             RecentBooks = recentBooks,
-            TotalLoansCompleted = completedLoans
+            TotalLoansCompleted = completedLoans,
+            DisplayName = displayName
         };
     }
 }

@@ -63,6 +63,23 @@ public class BooksController : ControllerBase
         return Ok(results);
     }
 
+    [HttpGet("nearby")]
+    public async Task<IActionResult> SearchNearbyBooks(string query)
+    {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (userIdClaim == null)
+        {
+            return Unauthorized("Utente non autenticato.");
+        }
+
+        var userId = int.Parse(userIdClaim);
+
+        var results = await _bookService.SearchNearbyBooksAsync(query, userId);
+
+        return Ok(results);
+    }
+
     [HttpGet("lookup/{isbn}")]
     public async Task<IActionResult> LookupBook(string isbn)
     {

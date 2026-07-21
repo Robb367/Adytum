@@ -10,4 +10,7 @@ public interface IBookService
 
     Task<List<MyLibrary>> GetMyLibraryAsync(int ownerId);
     Task<List<SearchBookResult>> SearchBooksAsync(string query);
+    Task<List<BooksNearby>> SearchNearbyBooksAsync(
+    string query,
+    int userId);
 }
