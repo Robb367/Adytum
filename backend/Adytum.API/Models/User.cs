@@ -24,4 +24,5 @@ public class User
     public ICollection<BookCopy> BookCopies { get; set; } = new List<BookCopy>();
     public ICollection<Loan> LoansGiven { get; set; } = new List<Loan>();
     public ICollection<Loan> LoansReceived { get; set; } = new List<Loan>();
+    public UserRole Role { get; set; } = UserRole.User;
 }

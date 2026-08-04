@@ -156,4 +156,48 @@ public class BookService : IBookService
             .OrderBy(b => b.DistanceKm)
             .ToList();
     }
+
+    public async Task<BookDetailsResponse> GetBookDetailsAsync(
+    int bookCopyId,
+    int currentUserId)
+{
+    var currentUser = await _context.Users.FindAsync(currentUserId);
+
+    if (currentUser == null)
+        throw new NotFoundException("Utente non trovato.");
+
+    var bookCopy = await _context.BookCopies
+        .Include(b => b.Book)
+        .Include(b => b.Owner)
+        .FirstOrDefaultAsync(b => b.Id == bookCopyId);
+
+    if (bookCopy == null)
+        throw new NotFoundException("Libro non trovato.");
+
+    var distance = GeoHelper.CalculateDistanceKm(
+        currentUser.Latitude,
+        currentUser.Longitude,
+        bookCopy.Owner.Latitude,
+        bookCopy.Owner.Longitude);
+
+    return new BookDetailsResponse
+    {
+        BookCopyId = bookCopy.Id,
+        Title = bookCopy.Book.Title,
+        Author = bookCopy.Book.Author,
+        ISBN = bookCopy.Book.ISBN,
+        Publisher = bookCopy.Book.Publisher,
+        PublicationYear = bookCopy.Book.PublicationYear,
+        Genre = bookCopy.Book.Genre,
+        Language = bookCopy.Book.Language,
+        Description = bookCopy.Book.Description,
+        CoverImageUrl = bookCopy.Book.CoverImageUrl,
+        Condition = bookCopy.Condition,
+        AvailableForLoan = bookCopy.AvailableForLoan,
+        OwnerDisplayName = bookCopy.Owner.DisplayName,
+        City = bookCopy.Owner.City,
+        Province = bookCopy.Owner.Province,
+        DistanceKm = Math.Round(distance, 2)
+    };
+}
 }

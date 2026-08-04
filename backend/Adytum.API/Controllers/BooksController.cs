@@ -93,4 +93,23 @@ public class BooksController : ControllerBase
         return Ok(book);
     }
     private readonly IBookLookupService _bookLookupService;
+
+    [HttpGet("{bookCopyId}")]
+    public async Task<IActionResult> GetBookDetails(int bookCopyId)
+    {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        var userId = int.Parse(userIdClaim);
+
+        var book = await _bookService.GetBookDetailsAsync(
+            bookCopyId,
+            userId);
+
+        return Ok(book);
+    }
 }

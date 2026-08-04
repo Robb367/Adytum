@@ -13,4 +13,5 @@ public interface IBookService
     Task<List<BooksNearby>> SearchNearbyBooksAsync(
     string query,
     int userId);
+    Task<BookDetailsResponse> GetBookDetailsAsync(int bookCopyId, int currentUserId);
 }

@@ -52,7 +52,8 @@ public class UserService : IUserService
 
         var token = _jwtService.GenerateToken(
             user.Id,
-            user.Username);
+            user.Username,
+            user.Role);
 
         return new LoginResponse
         {
@@ -96,6 +97,8 @@ public class UserService : IUserService
             DisplayName = string.IsNullOrWhiteSpace(request.DisplayName)
                 ? request.Username
                 : request.DisplayName,
+            
+            Role = UserRole.User,
 
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
 
