@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
 
+    const [loading, setLoading] = useState(false);
+
     const [email, setEmail] = useState("");
 
     const [password, setPassword] = useState("");
@@ -60,7 +62,8 @@ function LoginPage() {
                     />
 
                     <PrimaryButton
-                        text="Entra"
+                        text={loading ? "Accesso..." : "Entra"}
+                        disabled={loading}
                     />
 
                     <div className="login-links">
