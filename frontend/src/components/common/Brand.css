@@ -1,0 +1,52 @@
+.brand{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:18px;
+}
+
+.brand-logo{
+
+    color:#F4E7CF;
+
+    font-family:"Cinzel",serif;
+
+    letter-spacing:.10em;
+
+    text-shadow:
+
+        0 0 10px rgba(199,168,109,.15),
+
+        0 0 35px rgba(199,168,109,.10);
+
+}
+
+.brand-logo.small{
+
+    font-size:2rem;
+}
+
+.brand-logo.medium{
+
+    font-size:3rem;
+}
+
+.brand-logo.large{
+
+    font-size:4.5rem;
+}
+
+.brand-subtitle{
+
+    color:var(--text-secondary);
+
+    text-align:center;
+
+    font-size:1.1rem;
+
+    line-height:1.5;
+}

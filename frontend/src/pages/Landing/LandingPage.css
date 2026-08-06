@@ -1,0 +1,134 @@
+.hero-panel{
+
+    width:540px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    animation:fadeUp 1s ease;
+    max-width:90vm;
+}
+
+.hero-quote{
+
+    color:var(--gold);
+    letter-spacing:.04em;
+    font-size:.95rem;
+    margin-bottom:24px;
+    line-height:1.35;
+    font-style:italic;
+    opacity:.95;
+}
+
+.hero-logo{
+
+    font-size:4.5rem;
+    color:#F4E7CF;
+    text-shadow:
+        0 0 10px rgba(199,168,109,.15),
+        0 0 35px rgba(199,168,109,.10);
+    margin-bottom:24px;
+}
+
+.hero-subtitle{
+
+    color:var(--text-secondary);
+    font-size:1.1rem;
+    margin-bottom:30px;
+}
+
+.separator{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:14px;
+
+    margin:34px auto;
+
+    color:var(--gold);
+}
+
+.separator::before,
+
+.separator::after{
+
+    content:"";
+
+    width:80px;
+
+    height:1px;
+
+    background:linear-gradient(
+        to right,
+        transparent,
+        var(--gold)
+    );
+}
+
+.separator::after{
+
+    background:linear-gradient(
+        to left,
+        transparent,
+        var(--gold)
+    );
+}
+
+.separator span{
+
+    font-size:.9rem;
+
+    opacity:.9;
+}
+
+.welcome-title{
+
+    font-family:"Cinzel",serif;
+
+    font-size:1.5rem;
+
+    line-height:1.45;
+
+    color:var(--text);
+
+    margin-bottom:42px;
+}
+
+.buttons{
+
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:
+
+            translateY(40px)
+
+            scale(.98);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+
+            translateY(0)
+
+            scale(1);
+
+    }
+
+}

@@ -1,0 +1,25 @@
+.secondary-button{
+
+    width:100%;
+
+    padding:16px;
+
+    background:transparent;
+
+    color:var(--text);
+
+    border:1px solid var(--gold);
+
+    border-radius:var(--radius);
+
+    transition:var(--transition);
+
+    font-size:1rem;
+}
+
+.secondary-button:hover{
+
+    background:rgba(255,255,255,.05);
+
+    border-color:var(--primary);
+}

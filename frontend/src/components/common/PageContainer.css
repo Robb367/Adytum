@@ -1,0 +1,29 @@
+.page-container{
+
+    min-height:100vh;
+
+    width:100%;
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-repeat:no-repeat;
+}
+
+.page-overlay{
+
+    width:100%;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(0,0,0,.55);
+
+    padding:40px;
+}

@@ -1,0 +1,32 @@
+:root{
+
+    --background:#0F1012;
+
+    --surface:#181B1F;
+
+    --surface-light:#20242A;
+
+    --primary:#9F2D2D;
+
+    --primary-hover:#BF3A3A;
+
+    --gold:#C7A86D;
+
+    --text:#F6F4EF;
+
+    --text-secondary:#C9C4BC;
+
+    --border:#31353B;
+
+    --success:#2F8F62;
+
+    --warning:#C7922F;
+
+    --danger:#C44C4C;
+
+    --shadow:0 15px 35px rgba(0,0,0,.35);
+
+    --radius:18px;
+
+    --transition:.25s ease;
+}
