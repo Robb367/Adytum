@@ -1,8 +1,7 @@
 import {
     createContext,
     useContext,
-    useState,
-    useEffect
+    useState
 } from "react";
 
 import type { ReactNode } from "react";
@@ -17,7 +16,8 @@ interface AuthContextType {
 
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext =
+    createContext<AuthContextType | undefined>(undefined);
 
 interface AuthProviderProps {
 
@@ -31,19 +31,11 @@ export function AuthProvider({
 
 }: AuthProviderProps) {
 
-    const [token, setToken] = useState<string | null>(null);
+    const [token, setToken] = useState<string | null>(() => {
 
-    useEffect(() => {
+        return localStorage.getItem("token");
 
-        const savedToken = localStorage.getItem("token");
-
-        if (savedToken) {
-
-            setToken(savedToken);
-
-        }
-
-    }, []);
+    });
 
     function login(token: string) {
 
@@ -85,7 +77,9 @@ export function useAuth() {
 
     if (!context) {
 
-        throw new Error("useAuth deve essere usato dentro AuthProvider.");
+        throw new Error(
+            "useAuth deve essere usato dentro AuthProvider."
+        );
 
     }
 

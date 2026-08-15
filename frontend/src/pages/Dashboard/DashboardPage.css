@@ -1,0 +1,54 @@
+.dashboard-page {
+
+    padding: 50px;
+
+    color: var(--text);
+
+    min-height: 100vh;
+
+}
+
+.dashboard-stats {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 20px;
+
+    max-width: 1100px;
+
+}
+
+.dashboard-explore-button {
+    margin-top: 22px;
+    padding: 12px 22px;
+
+    border:
+        1px solid rgba(199, 168, 109, 0.45);
+
+    background:
+        rgba(185, 152, 95, 0.10);
+
+    color: var(--gold);
+
+    font-family: "Cinzel", serif;
+    letter-spacing: 0.08em;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.dashboard-explore-button:hover {
+    background:
+        rgba(185, 152, 95, 0.18);
+
+    border-color: var(--gold);
+
+    transform: translateY(-1px);
+}

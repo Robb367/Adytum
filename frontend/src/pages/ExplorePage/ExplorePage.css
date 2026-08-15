@@ -1,0 +1,529 @@
+.explore-page {
+    min-height: 100vh;
+    background: #090706;
+    color: #f1eadf;
+}
+
+/* HERO */
+
+.explore-hero {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    padding: 120px 7% 80px;
+
+    background:
+        linear-gradient(180deg,
+            rgba(4, 3, 3, 0.78) 0%,
+            rgba(7, 5, 4, 0.42) 38%,
+            rgba(7, 5, 4, 0.18) 70%,
+            rgba(7, 5, 4, 0.30) 100%),
+        url("../../assets/explore-background.png");
+
+    background-size: cover;
+    background-position: center;
+}
+
+.explore-content {
+    width: min(760px, 100%);
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.explore-eyebrow {
+    margin-bottom: 14px;
+
+    font-family: "Cinzel", serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.28em;
+
+    color: #b9985f;
+}
+
+.explore-content h1 {
+    margin: 0;
+
+    font-family: "Cinzel", serif;
+    font-size: clamp(2.8rem, 5vw, 4.8rem);
+    font-weight: 500;
+    line-height: 1.08;
+
+    color: #eee4d5;
+
+    text-shadow:
+        0 3px 15px rgba(0, 0, 0, 0.85);
+}
+
+.explore-subtitle {
+    max-width: 600px;
+
+    margin: 18px 0 30px;
+
+    font-family: "Lora", serif;
+    font-size: 1.05rem;
+    line-height: 1.7;
+
+    color: rgba(238, 228, 213, 0.78);
+}
+
+/* SEARCH */
+
+.explore-search {
+    display: flex;
+
+    width: min(680px, 100%);
+
+    border: 1px solid rgba(190, 156, 96, 0.45);
+    border-radius: 4px;
+
+    overflow: hidden;
+
+    background: rgba(12, 9, 7, 0.78);
+
+    backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.45);
+}
+
+.explore-search input {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 18px 20px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #f1eadf;
+
+    font-family: "Lora", serif;
+    font-size: 1rem;
+}
+
+.explore-search input::placeholder {
+    color: rgba(235, 225, 210, 0.42);
+}
+
+.explore-search button {
+    padding: 0 28px;
+
+    border: none;
+    border-left:
+        1px solid rgba(190, 156, 96, 0.32);
+
+    background:
+        linear-gradient(180deg,
+            #70221f,
+            #501513);
+
+    color: #f2e7d6;
+
+    font-family: "Cinzel", serif;
+    letter-spacing: 0.06em;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.explore-search button:hover:not(:disabled) {
+    background:
+        linear-gradient(180deg,
+            #842a26,
+            #621a17);
+}
+
+.explore-search button:disabled {
+    opacity: 0.65;
+    cursor: default;
+}
+
+/* MODES */
+
+.explore-modes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    margin-top: 16px;
+}
+
+.explore-modes button {
+    padding: 9px 16px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.25);
+
+    background:
+        rgba(8, 6, 5, 0.55);
+
+    color:
+        rgba(235, 225, 210, 0.62);
+
+    font-family: "Lora", serif;
+    font-size: 0.83rem;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.explore-modes button:hover {
+    border-color:
+        rgba(190, 156, 96, 0.55);
+
+    color: #e7d5b5;
+}
+
+.explore-modes button.active {
+    border-color: #b9985f;
+
+    background:
+        rgba(185, 152, 95, 0.13);
+
+    color: #d7bb87;
+}
+
+/* RESULTS */
+
+.explore-results-section {
+    padding: 70px 7% 100px;
+
+    background:
+        linear-gradient(180deg,
+            #090706,
+            #100c09);
+}
+
+.explore-results {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(240px, 1fr));
+
+    gap: 26px;
+
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.explore-book-card {
+    overflow: hidden;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.17);
+
+    background:
+        rgba(23, 17, 13, 0.83);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.explore-book-card:hover {
+    transform: translateY(-5px);
+
+    border-color:
+        rgba(190, 156, 96, 0.5);
+
+    box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.42);
+}
+
+.explore-card-cover {
+    height: 320px;
+
+    background: #0b0908;
+
+    overflow: hidden;
+}
+
+.explore-card-cover img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.explore-cover-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 2rem;
+
+    color: #8d7048;
+}
+
+.explore-card-info {
+    padding: 20px;
+}
+
+.explore-card-info h2 {
+    margin: 0 0 8px;
+
+    font-family: "Cinzel", serif;
+    font-size: 1.08rem;
+    font-weight: 500;
+
+    color: #e8dcc9;
+}
+
+.explore-card-author {
+    margin-bottom: 16px;
+
+    color: #bcae9c;
+}
+
+.explore-card-owner,
+.explore-card-distance {
+    margin: 5px 0;
+
+    font-size: 0.85rem;
+
+    color:
+        rgba(218, 204, 184, 0.58);
+}
+
+.explore-status {
+    display: inline-block;
+
+    margin-top: 16px;
+    padding: 6px 10px;
+
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+
+    border: 1px solid;
+}
+
+.explore-status.available {
+    color: #b7c6a0;
+    border-color:
+        rgba(183, 198, 160, 0.4);
+}
+
+.explore-status.unavailable {
+    color: #c58c84;
+    border-color:
+        rgba(197, 140, 132, 0.4);
+}
+
+.explore-empty,
+.explore-loading {
+    text-align: center;
+
+    color:
+        rgba(230, 217, 198, 0.65);
+}
+
+.explore-error {
+    margin-top: 18px;
+
+    color: #c58c84;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .explore-hero {
+        padding:
+            100px 24px 60px;
+
+        background-position: 62% center;
+    }
+
+    .explore-content h1 {
+        font-size: 2.7rem;
+    }
+
+    .explore-search {
+        flex-direction: column;
+    }
+
+    .explore-search button {
+        padding: 15px;
+
+        border-left: none;
+        border-top:
+            1px solid rgba(190, 156, 96, 0.32);
+    }
+
+    .explore-modes {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        margin-top: 16px;
+    }
+
+}
+
+.explore-content {
+    position: relative;
+}
+
+.explore-suggestions {
+    width: min(700px, 100%);
+
+    margin-top: 6px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.32);
+
+    background:
+        rgba(10, 7, 5, 0.94);
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.55);
+
+    overflow: hidden;
+
+    z-index: 20;
+}
+
+.explore-suggestion {
+    width: 100%;
+
+    padding: 13px 18px;
+
+    border: none;
+    border-bottom:
+        1px solid rgba(190, 156, 96, 0.12);
+
+    background: transparent;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease;
+}
+
+.explore-suggestion:last-child {
+    border-bottom: none;
+}
+
+.explore-suggestion:hover {
+    background:
+        rgba(185, 152, 95, 0.10);
+}
+
+.explore-suggestion div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.explore-suggestion strong {
+    font-family: "Cinzel", serif;
+
+    font-size: 0.85rem;
+    font-weight: 500;
+
+    color: #e8dcc9;
+}
+
+.explore-suggestion span {
+    font-family: "Lora", serif;
+
+    font-size: 0.78rem;
+
+    color:
+        rgba(225, 211, 192, 0.58);
+}
+
+.explore-suggestions {
+    width: min(680px, 100%);
+
+    margin-top: 5px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.35);
+
+    background:
+        rgba(10, 7, 5, 0.96);
+
+    backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.55);
+
+    z-index: 20;
+
+    overflow: hidden;
+}
+
+.explore-suggestion {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 4px;
+
+    padding: 13px 18px;
+
+    border: none;
+    border-bottom:
+        1px solid rgba(190, 156, 96, 0.12);
+
+    background: transparent;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.explore-suggestion:last-child {
+    border-bottom: none;
+}
+
+.explore-suggestion:hover {
+    background:
+        rgba(185, 152, 95, 0.12);
+}
+
+.explore-suggestion strong {
+    font-family: "Cinzel", serif;
+
+    font-size: 0.85rem;
+    font-weight: 500;
+
+    color: #e8dcc9;
+}
+
+.explore-suggestion span {
+    font-family: "Lora", serif;
+
+    font-size: 0.78rem;
+
+    color:
+        rgba(225, 211, 192, 0.58);
+}

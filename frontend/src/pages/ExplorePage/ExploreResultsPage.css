@@ -1,0 +1,148 @@
+.results-page {
+    min-height: 100vh;
+    padding: 80px 7%;
+    background: #090706;
+    color: #f1eadf;
+}
+
+.results-header {
+    max-width: 1400px;
+    margin: 0 auto 50px;
+}
+
+.results-header button {
+    margin-bottom: 30px;
+
+    border: none;
+    background: transparent;
+
+    color: #b9985f;
+
+    font-family: "Lora", serif;
+    cursor: pointer;
+}
+
+.results-header p {
+    margin-bottom: 10px;
+
+    font-family: "Cinzel", serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.22em;
+
+    color: #b9985f;
+}
+
+.results-header h1 {
+    margin: 0 0 10px;
+
+    font-family: "Cinzel", serif;
+    font-size: 2.5rem;
+
+    color: #eee4d5;
+}
+
+.results-header span {
+    color: rgba(238, 228, 213, 0.65);
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fill, minmax(220px, 1fr));
+
+    gap: 26px;
+
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.result-card {
+    border:
+        1px solid rgba(190, 156, 96, 0.2);
+
+    background: rgba(23, 17, 13, 0.9);
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.result-card:hover {
+    transform: translateY(-4px);
+
+    border-color:
+        rgba(190, 156, 96, 0.55);
+}
+
+.result-cover {
+    height: 320px;
+
+    background: #0b0908;
+}
+
+.result-cover img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.result-no-cover {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #8d7048;
+    font-size: 2rem;
+}
+
+.result-info {
+    padding: 18px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.result-info h2 {
+    margin: 0;
+
+    font-family: "Cinzel", serif;
+    font-size: 1rem;
+
+    color: #e8dcc9;
+}
+
+.result-info p {
+    margin: 0;
+
+    color: #bcae9c;
+}
+
+.result-info small {
+    color:
+        rgba(218, 204, 184, 0.58);
+}
+
+.result-info .available {
+    margin-top: 8px;
+    color: #b7c6a0;
+}
+
+.result-info .unavailable {
+    margin-top: 8px;
+    color: #c58c84;
+}
+
+.results-loading {
+    text-align: center;
+
+    color:
+        rgba(230, 217, 198, 0.65);
+}

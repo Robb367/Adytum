@@ -2,7 +2,7 @@ import { post } from "./api";
 
 interface LoginRequest {
 
-    email: string;
+    login: string;
 
     password: string;
 
@@ -10,6 +10,8 @@ interface LoginRequest {
 
 interface LoginResponse {
 
+    success: boolean;
+    message: string;
     token: string;
 
 }
@@ -21,7 +23,7 @@ export async function login(
 ): Promise<LoginResponse> {
 
     return await post<LoginResponse>(
-        "/auth/login",
+        "/Users/login",
         request
     );
 
