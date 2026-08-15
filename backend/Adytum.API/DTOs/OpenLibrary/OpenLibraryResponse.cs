@@ -15,4 +15,7 @@ public class OpenLibraryResponse
 
     [JsonPropertyName("covers")]
     public List<int> Covers { get; set; } = new();
+
+    [JsonPropertyName("publish_date")]
+    public string PublishDate { get; set; } = string.Empty;
 }

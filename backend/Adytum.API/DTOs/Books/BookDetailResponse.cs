@@ -35,4 +35,8 @@ public class BookDetailsResponse
     public string Province { get; set; } = string.Empty;
 
     public double DistanceKm { get; set; }
+
+    public bool IsOwnedByCurrentUser { get; set; }
+
+    public string PersonalNotes { get; set; } = string.Empty;
 }

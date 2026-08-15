@@ -14,4 +14,5 @@ public class MyLibrary
     public bool AvailableForLoan { get; set; }
 
     public BookCopyCondition Condition { get; set; }
+    public string? CoverImageUrl { get; set; }
 }

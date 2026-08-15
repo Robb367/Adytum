@@ -1,6 +1,7 @@
 namespace Adytum.API.DTOs.Books;
 
 using Adytum.API.Models;
+using Microsoft.AspNetCore.Http;
 
 public class AddBookToLibrary
 {
@@ -24,7 +25,11 @@ public class AddBookToLibrary
 
     public string Description { get; set; } = string.Empty;
 
-    public string CoverImageUrl { get; set; } = string.Empty;
+    // Copertina proveniente da Open Library
+    public string? CoverImageUrl { get; set; }
+
+    // Copertina caricata manualmente
+    public IFormFile? CoverImage { get; set; }
 
     public BookCopyCondition Condition { get; set; }
 

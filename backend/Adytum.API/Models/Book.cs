@@ -29,5 +29,5 @@ public class Book
 
     public string Description { get; set; } = string.Empty;
 
-    public string CoverImageUrl { get; set; } = string.Empty;
+    public string? CoverImageUrl { get; set; }
 }

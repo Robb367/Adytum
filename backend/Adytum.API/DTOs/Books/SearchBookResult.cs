@@ -10,7 +10,7 @@ public class SearchBookResult
 
     public string Author { get; set; } = string.Empty;
 
-    public string CoverImageUrl { get; set; } = string.Empty;
+    public string? CoverImageUrl { get; set; }
 
     public string OwnerDisplayName { get; set; } = string.Empty;
 

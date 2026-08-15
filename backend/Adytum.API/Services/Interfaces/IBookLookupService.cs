@@ -1,6 +1,6 @@
-namespace Adytum.API.Services.Interfaces;
-
 using Adytum.API.DTOs.BookLookup;
+
+namespace Adytum.API.Services.Interfaces;
 
 public interface IBookLookupService
 {

@@ -14,7 +14,6 @@ builder.Services.AddDbContext<AdytumDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IBookLookupService, OpenLibraryBookLookupService>();
 builder.Services.AddControllers();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -75,6 +74,20 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddHttpClient<OpenLibraryBookLookupProvider>();
+builder.Services.AddHttpClient<GoogleBooksLookupProvider>();
+builder.Services.AddScoped<IBookLookupProvider, OpenLibraryBookLookupProvider>();
+builder.Services.AddScoped<IBookLookupService, BookLookupService>();
+builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("React", policy =>
+    {
+        policy.WithOrigins("https://localhost:5173", "http://localhost:5173")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
@@ -86,6 +99,8 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseCors("React");
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();

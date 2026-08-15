@@ -35,6 +35,20 @@ public class LoanService : ILoanService
             throw new BusinessRuleException("Non puoi richiedere un prestito per un libro che possiedi.");
         }
 
+        if (bookCopy.OwnerId == borrowerId)
+        {
+            throw new BusinessRuleException(
+                "Non puoi richiedere un prestito per un libro che possiedi."
+            );
+        }
+
+        if (request.DueDate.Date <= DateTime.UtcNow.Date)
+        {
+            throw new BusinessRuleException(
+                "La data di restituzione deve essere successiva a oggi."
+            );
+        }
+
         var existingLoan = await _context.Loans.AnyAsync(l =>
             l.BookCopyId == request.BookCopyId &&
             l.BorrowerId == borrowerId &&

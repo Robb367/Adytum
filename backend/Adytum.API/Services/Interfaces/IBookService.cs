@@ -1,5 +1,4 @@
 using Adytum.API.DTOs.Books;
-
 namespace Adytum.API.Services.Interfaces;
 
 public interface IBookService
@@ -14,4 +13,6 @@ public interface IBookService
     string query,
     int userId);
     Task<BookDetailsResponse> GetBookDetailsAsync(int bookCopyId, int currentUserId);
+    Task<bool> ToggleBookAvailabilityAsync(int bookCopyId, int ownerId);
+    Task UpdateBookCopyAsync(int bookCopyId, int ownerId, UpdateBookCopyRequest request);
 }

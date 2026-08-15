@@ -22,7 +22,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPost("add")]
-    public async Task<IActionResult> AddBook(AddBookToLibrary request)
+    public async Task<IActionResult> AddBook([FromForm] AddBookToLibrary request)
     {
         var ownerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -111,5 +111,60 @@ public class BooksController : ControllerBase
             userId);
 
         return Ok(book);
+    }
+
+    [HttpPatch("{bookCopyId}/availability")]
+    [Authorize]
+    public async Task<IActionResult> ToggleAvailability(
+    int bookCopyId)
+    {
+        var userIdClaim = User.FindFirst(
+            ClaimTypes.NameIdentifier
+        );
+
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        var userId = int.Parse(userIdClaim.Value);
+
+        var availableForLoan =
+            await _bookService.ToggleBookAvailabilityAsync(
+                bookCopyId,
+                userId
+            );
+
+        return Ok(new
+        {
+            availableForLoan
+        });
+    }
+
+    [HttpPut("{bookCopyId}")]
+    public async Task<IActionResult> UpdateBookCopy(
+    int bookCopyId,
+    [FromBody] UpdateBookCopyRequest request)
+    {
+        var ownerIdClaim =
+            User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (ownerIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        var ownerId = int.Parse(ownerIdClaim);
+
+        await _bookService.UpdateBookCopyAsync(
+            bookCopyId,
+            ownerId,
+            request
+        );
+
+        return Ok(new
+        {
+            message = "Copia aggiornata correttamente."
+        });
     }
 }
