@@ -82,31 +82,42 @@ export async function put<T>(
     endpoint: string,
     token: string,
     body: unknown
-): Promise<T> {
+): Promise<T | undefined> {
 
     const response = await fetch(
         `${API_URL}${endpoint}`,
         {
             method: "PUT",
-
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-
             body: JSON.stringify(body)
         }
     );
 
     if (!response.ok) {
+
+        const text = await response.text();
+
         throw new Error(
+            text ||
             `Errore durante la richiesta. Status: ${response.status}`
         );
     }
 
-    return await response.json();
-}
+    if (response.status === 204) {
+        return undefined;
+    }
 
+    const text = await response.text();
+
+    if (!text) {
+        return undefined;
+    }
+
+    return JSON.parse(text) as T;
+}
 export async function postAuthenticated<T>(
     endpoint: string,
     token: string,

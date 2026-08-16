@@ -1,0 +1,170 @@
+.register-page {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+
+    background:
+        linear-gradient(
+            rgba(5, 4, 3, 0.82),
+            rgba(5, 4, 3, 0.92)
+        ),
+        url("../../assets/explore-background.png");
+
+    background-size: cover;
+    background-position: center;
+
+    color: #f1eadf;
+}
+
+.register-card {
+    width: min(520px, 100%);
+
+    padding: 42px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.28);
+
+    background:
+        rgba(10, 7, 5, 0.88);
+
+    backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.register-eyebrow {
+    margin: 0 0 10px;
+
+    text-align: center;
+
+    font-family: "Cinzel", serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.24em;
+
+    color: #b9985f;
+}
+
+.register-card h1 {
+    margin: 0;
+
+    text-align: center;
+
+    font-family: "Cinzel", serif;
+    font-size: 2rem;
+    font-weight: 500;
+
+    color: #eee4d5;
+}
+
+.register-subtitle {
+    margin: 14px auto 28px;
+
+    text-align: center;
+
+    color:
+        rgba(238, 228, 213, 0.65);
+
+    line-height: 1.6;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.register-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    font-family: "Cinzel", serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+
+    color: #c9ad78;
+}
+
+.register-form input {
+    padding: 12px 14px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.3);
+
+    background: #12100e;
+
+    color: #eee4d5;
+
+    font-family: "Lora", serif;
+
+    outline: none;
+}
+
+.register-form input:focus {
+    border-color: #b9985f;
+}
+
+.password-hint {
+    margin: -8px 0 0;
+
+    font-size: 0.78rem;
+
+    color:
+        rgba(238, 228, 213, 0.45);
+}
+
+.register-form button {
+    margin-top: 8px;
+
+    padding: 12px 20px;
+
+    border:
+        1px solid rgba(121, 38, 34, 0.8);
+
+    background:
+        linear-gradient(
+            180deg,
+            #76241f,
+            #551714
+        );
+
+    color: #f2e7d6;
+
+    font-family: "Cinzel", serif;
+    letter-spacing: 0.06em;
+
+    cursor: pointer;
+}
+
+.register-form button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.register-error {
+    color: #c98f89;
+}
+
+.register-success {
+    color: #b7c6a0;
+}
+
+.register-login-link {
+    display: block;
+
+    margin: 22px auto 0;
+
+    border: none;
+    background: transparent;
+
+    color: #b9985f;
+
+    font-family: "Lora", serif;
+
+    cursor: pointer;
+}

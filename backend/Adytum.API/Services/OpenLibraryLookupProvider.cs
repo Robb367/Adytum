@@ -9,55 +9,100 @@ public class OpenLibraryBookLookupProvider : IBookLookupProvider
 {
     private readonly HttpClient _httpClient;
 
-    public OpenLibraryBookLookupProvider(HttpClient httpClient)
+    public OpenLibraryBookLookupProvider(
+        HttpClient httpClient)
     {
         _httpClient = httpClient;
     }
 
-    public async Task<BookLookupResponse?> LookupAsync(string isbn)
+    public async Task<BookLookupResponse?> LookupAsync(
+        string isbn)
     {
-        var url = $"https://openlibrary.org/isbn/{isbn}.json";
+        var url =
+            $"https://openlibrary.org/search.json?isbn={Uri.EscapeDataString(isbn)}";
 
-        var response = await _httpClient.GetAsync(url);
+        var response =
+            await _httpClient.GetAsync(url);
 
         if (!response.IsSuccessStatusCode)
         {
             return null;
         }
 
-        var json = await response.Content.ReadAsStringAsync();
+        var json =
+            await response.Content.ReadAsStringAsync();
 
-        var openLibraryBook =
-            JsonSerializer.Deserialize<OpenLibraryResponse>(json);
+        var searchResponse =
+            JsonSerializer.Deserialize<OpenLibrarySearchResponse>(
+                json
+            );
 
-        if (openLibraryBook == null)
+        var document =
+            searchResponse?.Docs.FirstOrDefault();
+
+        if (document == null)
         {
             return null;
         }
 
         string? coverUrl = null;
 
-        if (openLibraryBook.Covers != null &&
-            openLibraryBook.Covers.Any())
+        if (document.CoverId.HasValue)
         {
-            var coverId = openLibraryBook.Covers.First();
-
             coverUrl =
-                $"https://covers.openlibrary.org/b/id/{coverId}-L.jpg";
+                $"https://covers.openlibrary.org/b/id/{document.CoverId.Value}-L.jpg";
         }
 
         return new BookLookupResponse
         {
-            ISBN = openLibraryBook.Isbn13.FirstOrDefault()
-                   ?? isbn,
+            ISBN =
+                document.Isbns
+                    .FirstOrDefault(i => i == isbn)
+                ?? isbn,
 
-            Title = openLibraryBook.Title,
+            Title =
+                document.Title,
 
-            Publisher =
-                openLibraryBook.Publishers.FirstOrDefault()
+            Author =
+                document.AuthorNames.FirstOrDefault()
                 ?? string.Empty,
 
-            CoverImageUrl = coverUrl
+            Publisher =
+                document.Publishers.FirstOrDefault()
+                ?? string.Empty,
+
+            PublicationYear =
+                document.FirstPublishYear,
+
+            Language =
+                GetLanguageLabel(
+                    document.Languages.FirstOrDefault()
+                ),
+
+            Pages =
+                document.NumberOfPagesMedian,
+
+            Description =
+                string.Empty,
+
+            CoverImageUrl =
+                coverUrl
+        };
+    }
+
+    private static string? GetLanguageLabel(
+        string? languageCode)
+    {
+        return languageCode switch
+        {
+            "ita" => "Italiano",
+            "eng" => "Inglese",
+            "fre" => "Francese",
+            "fra" => "Francese",
+            "ger" => "Tedesco",
+            "deu" => "Tedesco",
+            "spa" => "Spagnolo",
+            _ => languageCode
         };
     }
 }

@@ -54,6 +54,7 @@ function LandingPage() {
 
                     <SecondaryButton
                         text="Registrati"
+                        onClick={() => navigate("/register")}
                     />
 
                 </div>

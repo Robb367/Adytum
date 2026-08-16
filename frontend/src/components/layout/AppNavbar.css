@@ -1,0 +1,168 @@
+.app-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 68px;
+
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+
+    padding: 0 5%;
+
+    z-index: 1000;
+
+    background:
+        rgba(7, 5, 4, 0.88);
+
+    backdrop-filter: blur(14px);
+
+    border-bottom:
+        1px solid rgba(190, 156, 96, 0.18);
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.28);
+}
+
+.app-navbar-brand {
+    border: none;
+    background: transparent;
+
+    color: #d0ad6d;
+
+    font-family: "Cinzel", serif;
+    font-size: 1.15rem;
+    letter-spacing: 0.22em;
+
+    cursor: pointer;
+}
+
+.app-navbar-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 32px;
+}
+
+.app-navbar-links a {
+    position: relative;
+
+    padding: 23px 0 20px;
+
+    color:
+        rgba(238, 228, 213, 0.62);
+
+    font-family: "Lora", serif;
+    font-size: 0.9rem;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease;
+}
+
+.app-navbar-links a:hover {
+    color: #e6d5b6;
+}
+
+.app-navbar-links a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    bottom: 13px;
+
+    width: 0;
+    height: 1px;
+
+    background: #b9985f;
+
+    transform: translateX(-50%);
+
+    transition:
+        width 0.2s ease;
+}
+
+.app-navbar-links a.active {
+    color: #d8bb83;
+}
+
+.app-navbar-links a.active::after {
+    width: 100%;
+}
+
+.app-navbar-logout {
+    padding: 8px 14px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.28);
+
+    background: transparent;
+
+    color:
+        rgba(238, 228, 213, 0.62);
+
+    font-family: "Lora", serif;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.app-navbar-logout:hover {
+    color: #d8bb83;
+
+    border-color:
+        rgba(190, 156, 96, 0.6);
+}
+
+@media (max-width: 850px) {
+
+    .app-navbar {
+        grid-template-columns: auto auto;
+
+        height: auto;
+
+        padding:
+            14px 22px;
+    }
+
+    .app-navbar-links {
+        grid-column:
+            1 / -1;
+
+        order: 3;
+
+        width: 100%;
+
+        margin-top: 12px;
+
+        justify-content: flex-start;
+
+        gap: 18px;
+
+        overflow-x: auto;
+    }
+
+    .app-navbar-links a {
+        padding:
+            8px 0 12px;
+
+        white-space: nowrap;
+    }
+
+    .app-navbar-links a::after {
+        bottom: 5px;
+    }
+
+    .app-navbar-logout {
+        justify-self: end;
+    }
+
+}

@@ -16,7 +16,7 @@ public class BookCopy
 
     public bool AvailableForLoan { get; set; }
 
-    public string PersonalNotes { get; set; } = string.Empty;
+    public string? PersonalNotes { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

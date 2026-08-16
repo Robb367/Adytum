@@ -79,6 +79,7 @@ builder.Services.AddHttpClient<GoogleBooksLookupProvider>();
 builder.Services.AddScoped<IBookLookupProvider, OpenLibraryBookLookupProvider>();
 builder.Services.AddScoped<IBookLookupService, BookLookupService>();
 builder.Services.AddControllers();
+builder.Services.AddScoped<IGeocodingService, GeocodingService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("React", policy =>

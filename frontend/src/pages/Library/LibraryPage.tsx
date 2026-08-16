@@ -109,18 +109,30 @@ function LibraryPage() {
 
             <header className="library-header">
 
-                <p className="library-eyebrow">
-                    La tua collezione
-                </p>
+                <div className="library-header-text">
 
-                <h1>
-                    La tua biblioteca
-                </h1>
+                    <p className="library-eyebrow">
+                        La tua collezione
+                    </p>
 
-                <p>
-                    Custodisci, organizza e ritrova
-                    le storie che hai scelto di conservare.
-                </p>
+                    <h1>
+                        La tua biblioteca
+                    </h1>
+
+                    <p>
+                        Custodisci, organizza e ritrova
+                        le storie che hai scelto di conservare.
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    className="library-add-button"
+                    onClick={() => navigate("/books/add")}
+                >
+                    + Aggiungi libro
+                </button>
 
             </header>
 
@@ -138,99 +150,113 @@ function LibraryPage() {
             </div>
             <section className="library-grid">
 
-                {filteredBooks.map((book) => {
+                {filteredBooks.length === 0 ? (
 
-                    const coverUrl =
-                        getImageUrl(book.coverImageUrl);
+                    <div className="library-no-results">
 
-                    const conditionLabel =
-                        getBookConditionLabel(book.condition);
-
-                    if (filteredBooks.length === 0) {
-                        return (
-                            <div className="library-no-results">
-                                <p>
-                                    Nessun risultato trovato per <span>{searchTerm}</span>.
-                                </p>
-                            </div>
-                        );
-                    }
-                    return (
-
-                        <article
-                            className="library-card"
-                            key={book.bookCopyId}
-                            onClick={() =>
-                                navigate(`/books/${book.bookCopyId}`)
+                        <p>
+                            {searchTerm.trim()
+                                ? (
+                                    <>
+                                        Nessun risultato trovato per{" "}
+                                        <span>{searchTerm}</span>.
+                                    </>
+                                )
+                                : "La tua biblioteca è ancora vuota."
                             }
-                        >
+                        </p>
 
-                            <div className="library-cover">
+                    </div>
 
-                                {coverUrl ? (
+                ) : (
 
-                                    <img
-                                        src={coverUrl}
-                                        alt={`Copertina di ${book.title}`}
-                                    />
+                    filteredBooks.map((book) => {
 
-                                ) : (
+                        const coverUrl =
+                            getImageUrl(book.coverImageUrl);
 
-                                    <div className="library-cover-placeholder">
+                        const conditionLabel =
+                            getBookConditionLabel(book.condition);
 
-                                        <span>✦</span>
+                        return (
 
-                                        <p>
-                                            Nessuna
-                                            <br />
-                                            copertina
-                                        </p>
+                            <article
+                                className="library-card"
+                                key={book.bookCopyId}
+                                onClick={() =>
+                                    navigate(`/books/${book.bookCopyId}`)
+                                }
+                            >
 
-                                    </div>
+                                <div className="library-cover">
 
-                                )}
+                                    {coverUrl ? (
 
-                            </div>
+                                        <img
+                                            src={coverUrl}
+                                            alt={`Copertina di ${book.title}`}
+                                        />
 
-                            <div className="library-card-body">
+                                    ) : (
 
-                                <h2>
-                                    {book.title}
-                                </h2>
+                                        <div className="library-cover-placeholder">
 
-                                <p className="library-author">
-                                    {book.author}
-                                </p>
+                                            <span>✦</span>
 
-                                <div className="library-meta">
+                                            <p>
+                                                Nessuna
+                                                <br />
+                                                copertina
+                                            </p>
 
-                                    <span>
-                                        {conditionLabel}
-                                    </span>
+                                        </div>
 
-                                    <span
-                                        className={
-                                            book.availableForLoan
-                                                ? "availability available"
-                                                : "availability unavailable"
-                                        }
-                                    >
-                                        {
-                                            book.availableForLoan
-                                                ? "Disponibile"
-                                                : "Non disponibile"
-                                        }
-                                    </span>
+                                    )}
 
                                 </div>
 
-                            </div>
+                                <div className="library-card-body">
 
-                        </article>
+                                    <h2>
+                                        {book.title}
+                                    </h2>
 
-                    );
+                                    <p className="library-author">
+                                        {book.author}
+                                    </p>
 
-                })}
+                                    <div className="library-meta">
+
+                                        <span>
+                                            {conditionLabel}
+                                        </span>
+
+                                        <span
+                                            className={
+                                                book.availableForLoan
+                                                    ? "availability available"
+                                                    : "availability unavailable"
+                                            }
+                                        >
+                                            {
+                                                book.availableForLoan
+                                                    ? "Disponibile"
+                                                    : "Non disponibile"
+                                            }
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                        );
+
+                    })
+
+                )}
+
             </section>
 
         </main>

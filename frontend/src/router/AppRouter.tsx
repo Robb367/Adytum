@@ -10,6 +10,10 @@ import EditBookCopyPage from "../pages/EditBookCopy/EditBookCopyPage";
 import ExplorePage from "../pages/ExplorePage/ExplorePage";
 import ExploreResultsPage from "../pages/ExplorePage/ExploreResultsPage";
 import LoansPage from "../pages/LoansPage/LoansPage";
+import AppShell from "../components/layout/AppShell";
+import RegisterPage from "../pages/RegisterPage/RegisterPage";
+import AddBookPage from "../pages/Library/AddBookPage";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 
 function AppRouter() {
 
@@ -18,76 +22,98 @@ function AppRouter() {
         <BrowserRouter>
 
             <Routes>
+                <Route element={<AppShell />}>
 
-                <Route
-                    path="/"
-                    element={<LandingPage />}
-                />
+                    <Route
+                        path="/"
+                        element={<LandingPage />}
+                    />
 
-                <Route
-                    path="/login"
-                    element={<LoginPage />}
-                />
-                <Route
-                    path="/dashboard"
-                    element={
-                        <ProtectedRoute>
-                            <DashboardPage />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/library"
-                    element={
-                        <ProtectedRoute>
-                            <LibraryPage />
-                        </ProtectedRoute>
-                    }
-                />
+                    <Route
+                        path="/login"
+                        element={<LoginPage />}
+                    />
 
-                <Route
-                    path="/books/:bookCopyId"
-                    element={
-                        <ProtectedRoute>
-                            <BookDetailsPage />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/books/:bookCopyId/edit"
-                    element={
-                        <ProtectedRoute>
-                            <EditBookCopyPage />
-                        </ProtectedRoute>
-                    }
-                />
+                    <Route
+                        path="/register"
+                        element={<RegisterPage />}
+                    />
 
-                <Route
-                    path="/explore"
-                    element={
-                        <ProtectedRoute>
-                            <ExplorePage />
-                        </ProtectedRoute>
-                    }
-                />
+                    <Route
+                        path="/profile"
+                        element={
+                            <ProtectedRoute>
+                                <ProfilePage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/dashboard"
+                        element={
+                            <ProtectedRoute>
+                                <DashboardPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    
+                    <Route
+                        path="/library"
+                        element={
+                            <ProtectedRoute>
+                                <LibraryPage />
+                            </ProtectedRoute>
+                        }
+                    />
 
-                <Route
-                    path="/explore/results"
-                    element={
-                        <ProtectedRoute>
-                            <ExploreResultsPage />
-                        </ProtectedRoute>
-                    }
-                />
+                    <Route
+                        path="/books/add"
+                        element={<AddBookPage />}
+                    />
 
-                <Route
-                    path="/loans"
-                    element={
-                        <ProtectedRoute>
-                            <LoansPage />
-                        </ProtectedRoute>
-                    }
-                />
+                    <Route
+                        path="/books/:bookCopyId"
+                        element={
+                            <ProtectedRoute>
+                                <BookDetailsPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/books/:bookCopyId/edit"
+                        element={
+                            <ProtectedRoute>
+                                <EditBookCopyPage />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/explore"
+                        element={
+                            <ProtectedRoute>
+                                <ExplorePage />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/explore/results"
+                        element={
+                            <ProtectedRoute>
+                                <ExploreResultsPage />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/loans"
+                        element={
+                            <ProtectedRoute>
+                                <LoansPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                </Route>
             </Routes>
 
         </BrowserRouter>

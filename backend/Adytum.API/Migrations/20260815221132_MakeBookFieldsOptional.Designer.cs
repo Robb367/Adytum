@@ -4,6 +4,7 @@ using Adytum.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Adytum.API.Migrations
 {
     [DbContext(typeof(AdytumDbContext))]
-    partial class AdytumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260815221132_MakeBookFieldsOptional")]
+    partial class MakeBookFieldsOptional
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,10 +52,10 @@ namespace Adytum.API.Migrations
                     b.Property<string>("Language")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Pages")
+                    b.Property<int>("Pages")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PublicationYear")
+                    b.Property<int>("PublicationYear")
                         .HasColumnType("int");
 
                     b.Property<string>("Publisher")
@@ -161,12 +164,15 @@ namespace Adytum.API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Bio")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DisplayName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -190,9 +196,11 @@ namespace Adytum.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilePictureUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Province")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RegistrationDate")
@@ -203,9 +211,6 @@ namespace Adytum.API.Migrations
 
                     b.Property<int>("SearchRadiusKm")
                         .HasColumnType("int");
-
-                    b.Property<string>("StreetAddress")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
                         .IsRequired()

@@ -1,0 +1,294 @@
+.add-book-page {
+    min-height: 100vh;
+
+    padding: 60px 7% 100px;
+
+    color: #f1eadf;
+
+    background:
+        linear-gradient(
+            rgba(7, 5, 4, 0.9),
+            rgba(7, 5, 4, 0.96)
+        ),
+        url("../../assets/book-details-background.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.add-book-header {
+    max-width: 1000px;
+    margin: 0 auto 35px;
+}
+
+.add-book-header button {
+    margin-bottom: 28px;
+
+    border: none;
+    background: transparent;
+
+    color: #b9985f;
+
+    font-family: "Lora", serif;
+
+    cursor: pointer;
+}
+
+.add-book-header > p {
+    margin: 0 0 8px;
+
+    font-family: "Cinzel", serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+
+    color: #b9985f;
+}
+
+.add-book-header h1 {
+    margin: 0;
+
+    font-family: "Cinzel", serif;
+    font-size: 2.5rem;
+    font-weight: 500;
+
+    color: #eee4d5;
+}
+
+.add-book-header span {
+    display: block;
+
+    margin-top: 12px;
+
+    color:
+        rgba(238, 228, 213, 0.62);
+}
+
+.add-book-card {
+    max-width: 1000px;
+    margin: 0 auto;
+
+    padding: 32px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.2);
+
+    background:
+        rgba(10, 7, 5, 0.82);
+
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 22px 60px rgba(0, 0, 0, 0.4);
+}
+
+.isbn-search label,
+.add-book-form label {
+    font-family: "Cinzel", serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+
+    color: #c9ad78;
+}
+
+.isbn-search > div {
+    display: flex;
+
+    margin-top: 8px;
+}
+
+.isbn-search input {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.isbn-search button {
+    padding: 0 26px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.4);
+
+    background:
+        rgba(185, 152, 95, 0.12);
+
+    color: #d7bb87;
+
+    font-family: "Cinzel", serif;
+
+    cursor: pointer;
+}
+
+.add-book-form {
+    margin-top: 30px;
+}
+
+.add-book-form-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+.add-book-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.add-book-form input,
+.add-book-form textarea,
+.add-book-form select,
+.isbn-search input {
+    padding: 12px 14px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.28);
+
+    background:
+        rgba(18, 15, 12, 0.92);
+
+    color: #eee4d5;
+
+    font-family: "Lora", serif;
+
+    outline: none;
+}
+
+.add-book-form input:focus,
+.add-book-form textarea:focus,
+.add-book-form select:focus,
+.isbn-search input:focus {
+    border-color: #b9985f;
+}
+
+.add-book-description {
+    margin-top: 20px;
+}
+
+.add-book-copy-section {
+    margin-top: 35px;
+
+    padding-top: 28px;
+
+    border-top:
+        1px solid rgba(190, 156, 96, 0.15);
+}
+
+.add-book-copy-section h2 {
+    margin: 0 0 22px;
+
+    font-family: "Cinzel", serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+
+    color: #eee4d5;
+}
+
+.add-book-checkbox {
+    flex-direction: row !important;
+    align-items: center;
+
+    margin-top: 22px;
+}
+
+.add-book-checkbox input {
+    width: auto;
+}
+
+.lookup-message {
+    margin-top: 12px;
+
+    color: #b7c6a0;
+
+    font-size: 0.88rem;
+}
+
+.add-book-error {
+    margin-top: 20px;
+
+    color: #c58c84;
+}
+
+.add-book-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    margin-top: 30px;
+
+    padding-top: 25px;
+
+    border-top:
+        1px solid rgba(190, 156, 96, 0.15);
+}
+
+.add-book-actions button {
+    padding: 11px 20px;
+
+    font-family: "Cinzel", serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+
+    cursor: pointer;
+}
+
+.add-book-cancel {
+    border:
+        1px solid rgba(190, 156, 96, 0.25);
+
+    background: transparent;
+
+    color:
+        rgba(238, 228, 213, 0.65);
+}
+
+.add-book-submit {
+    border:
+        1px solid rgba(121, 38, 34, 0.8);
+
+    background:
+        linear-gradient(
+            180deg,
+            #76241f,
+            #551714
+        );
+
+    color: #f2e7d6;
+}
+
+@media (max-width: 700px) {
+
+    .add-book-page {
+        padding:
+            40px 20px 70px;
+    }
+
+    .add-book-card {
+        padding: 22px;
+    }
+
+    .add-book-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .isbn-search > div {
+        flex-direction: column;
+    }
+
+    .isbn-search button {
+        padding: 12px;
+
+        margin-top: 8px;
+    }
+
+    .add-book-actions {
+        flex-direction: column;
+    }
+
+    .add-book-actions button {
+        width: 100%;
+    }
+
+}

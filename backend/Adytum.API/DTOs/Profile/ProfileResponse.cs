@@ -6,17 +6,19 @@ public class ProfileResponse
 {
     public string Username { get; set; } = string.Empty;
 
-    public string DisplayName { get; set; } = string.Empty;
+    public string? DisplayName { get; set; }
 
     public string Email { get; set; } = string.Empty;
 
-    public string Bio { get; set; } = string.Empty;
+    public string? Bio { get; set; }
 
-    public string ProfilePictureUrl { get; set; } = string.Empty;
+    public string? ProfilePictureUrl { get; set; }
 
-    public string City { get; set; } = string.Empty;
+    public string? City { get; set; }
 
-    public string Province { get; set; } = string.Empty;
+    public string? Province { get; set; }
+
+    public string? StreetAddress { get; set; }
 
     public double Latitude { get; set; }
 

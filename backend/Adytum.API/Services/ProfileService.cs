@@ -10,10 +10,15 @@ namespace Adytum.API.Services;
 public class ProfileService : IProfileService
 {
     private readonly AdytumDbContext _context;
+    private readonly IGeocodingService _geocodingService;
 
-    public ProfileService(AdytumDbContext context)
+
+    public ProfileService(
+        AdytumDbContext context,
+        IGeocodingService geocodingService)
     {
         _context = context;
+        _geocodingService = geocodingService;
     }
 
     public async Task<ProfileResponse> GetMyProfileAsync(int userId)
@@ -50,12 +55,12 @@ public class ProfileService : IProfileService
             ProfilePictureUrl = user.ProfilePictureUrl,
             City = user.City,
             Province = user.Province,
+            StreetAddress = user.StreetAddress,
             Latitude = user.Latitude,
             Longitude = user.Longitude,
             SearchRadiusKm = user.SearchRadiusKm,
             RegistrationDate = user.RegistrationDate,
             IsPublicProfile = user.IsPublicProfile,
-
             BooksOwned = booksOwned,
             AvailableBooks = availableBooks,
             ActiveLoans = activeLoans,
@@ -63,7 +68,9 @@ public class ProfileService : IProfileService
         };
     }
 
-    public async Task UpdateProfileAsync(int userId, UpdateProfileRequest request)
+    public async Task UpdateProfileAsync(
+     int userId,
+     UpdateProfileRequest request)
     {
         var user = await _context.Users.FindAsync(userId);
 
@@ -75,10 +82,34 @@ public class ProfileService : IProfileService
         user.ProfilePictureUrl = request.ProfilePictureUrl;
         user.City = request.City;
         user.Province = request.Province;
-        user.Latitude = request.Latitude;
-        user.Longitude = request.Longitude;
+        user.StreetAddress = request.StreetAddress;
         user.SearchRadiusKm = request.SearchRadiusKm;
         user.IsPublicProfile = request.IsPublicProfile;
+
+        if (!string.IsNullOrWhiteSpace(request.City))
+        {
+            var coordinates =
+                await _geocodingService.GeocodeAsync(
+                    request.City,
+                    request.Province,
+                    request.StreetAddress
+                );
+
+            if (coordinates.HasValue)
+            {
+                user.Latitude =
+                    coordinates.Value.Latitude;
+
+                user.Longitude =
+                    coordinates.Value.Longitude;
+            }
+            else
+            {
+                throw new BusinessRuleException(
+                    "Non è stato possibile trovare la località indicata."
+                );
+            }
+        }
 
         await _context.SaveChangesAsync();
     }

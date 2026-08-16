@@ -10,11 +10,12 @@ public class User
     public string Username { get; set; } = String.Empty;
     public string Email { get; set; } = String.Empty;
     public string PasswordHash { get; set; } = String.Empty;
-    public string ProfilePictureUrl { get; set; } = String.Empty;
-    public string DisplayName { get; set; } = String.Empty;
-    public string Bio { get; set; } = String.Empty;
-    public string City { get; set; } = String.Empty;
-    public string Province { get; set; } = String.Empty;
+    public string? ProfilePictureUrl { get; set; }
+    public string? DisplayName { get; set; }
+    public string? Bio { get; set; }
+    public string? City { get; set; }
+    public string? Province { get; set; }
+    public string? StreetAddress { get; set; }
     public double Latitude { get; set; }
     public double Longitude { get; set; }
     public int SearchRadiusKm { get; set; } = 20;
