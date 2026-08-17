@@ -110,3 +110,282 @@
 
     flex-wrap: wrap;
 }
+
+.edit-book-fields {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+
+    margin-bottom: 30px;
+}
+
+.edit-book-field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.edit-book-field label {
+    color: var(--gold);
+
+    font-family: "Cinzel", serif;
+    font-size: 0.85rem;
+}
+
+.edit-book-field input,
+.edit-book-field textarea {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.28);
+
+    background:
+        rgba(10, 8, 6, 0.72);
+
+    color: #eee4d5;
+
+    font-family: "Lora", serif;
+
+    outline: none;
+}
+
+.edit-book-field input:focus,
+.edit-book-field textarea:focus {
+    border-color: var(--gold);
+}
+
+.edit-book-row {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+.edit-book-page {
+    max-width: 1400px;
+    margin: 0 auto;
+
+    padding: 42px 50px 70px;
+}
+
+.edit-book-layout {
+    display: grid;
+
+    grid-template-columns:
+        260px minmax(0, 1fr);
+
+    gap: 40px;
+
+    align-items: start;
+
+    margin-top: 28px;
+}
+
+.edit-book-cover-panel {
+    position: sticky;
+    top: 105px;
+}
+
+.edit-book-cover-preview {
+    width: 100%;
+
+    aspect-ratio: 2 / 3;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.3);
+
+    background:
+        rgba(7, 5, 4, 0.72);
+}
+
+.edit-book-cover-preview img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.edit-book-cover-placeholder {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    color: rgba(238, 228, 213, 0.55);
+
+    font-family: "Cinzel", serif;
+}
+
+.edit-book-cover-placeholder span {
+    color: var(--gold);
+
+    font-size: 1.4rem;
+}
+
+.edit-book-cover-upload {
+    display: block;
+
+    margin-top: 14px;
+
+    padding: 11px 14px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.35);
+
+    background:
+        rgba(10, 8, 6, 0.65);
+
+    color: var(--gold);
+
+    font-family: "Cinzel", serif;
+    font-size: 0.82rem;
+
+    cursor: pointer;
+
+    text-align: center;
+}
+
+.edit-book-cover-upload input {
+    display: none;
+}
+
+.edit-book-cover-url {
+    margin-top: 16px;
+}
+
+.edit-book-cover-url label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--gold);
+
+    font-family: "Cinzel", serif;
+    font-size: 0.76rem;
+}
+
+.edit-book-cover-url input {
+    width: 100%;
+
+    padding: 10px 12px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.28);
+
+    background:
+        rgba(10, 8, 6, 0.72);
+
+    color: #eee4d5;
+}
+
+.edit-book-main {
+    min-width: 0;
+}
+
+.edit-book-fields {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px 20px;
+
+    margin-bottom: 24px;
+}
+
+.edit-book-field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+.edit-book-field:first-child,
+.edit-book-field:nth-child(2),
+.edit-book-field:nth-child(3),
+.edit-book-field:nth-last-child(2),
+.edit-book-field:last-child {
+    grid-column: 1 / -1;
+}
+
+.edit-book-row {
+    display: contents;
+}
+
+.edit-book-field input,
+.edit-book-field textarea,
+.edit-book-form select,
+.edit-book-form textarea {
+    padding: 10px 12px;
+}
+
+.edit-book-field textarea {
+    min-height: 105px;
+}
+
+.edit-book-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+.edit-book-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+
+    margin-top: 18px;
+}
+
+.edit-book-actions > * {
+    width: 100%;
+}
+
+.edit-book-actions button {
+    width: 100%;
+
+    min-height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 900px) {
+
+    .edit-book-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .edit-book-cover-panel {
+        position: static;
+
+        max-width: 260px;
+    }
+
+    .edit-book-fields {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 600px) {
+    .edit-book-actions {
+        grid-template-columns: 1fr;
+    }
+}

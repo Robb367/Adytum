@@ -1,4 +1,5 @@
 namespace Adytum.API.DTOs.Dashboard;
+
 public class RecentBookDto
 {
     public int BookCopyId { get; set; }
@@ -7,5 +8,5 @@ public class RecentBookDto
 
     public string Author { get; set; } = "";
 
-    public string? CoverUrl { get; set; }
+    public string? CoverImageUrl { get; set; }
 }

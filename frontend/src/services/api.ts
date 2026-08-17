@@ -118,6 +118,65 @@ export async function put<T>(
 
     return JSON.parse(text) as T;
 }
+
+export async function remove(
+    endpoint: string,
+    token: string
+): Promise<void> {
+
+    const response = await fetch(
+        `${API_URL}${endpoint}`,
+        {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }
+    );
+
+    if (!response.ok) {
+
+        const text =
+            await response.text();
+
+        throw new Error(
+            text ||
+            `Errore durante la richiesta. Status: ${response.status}`
+        );
+    }
+}
+
+export async function postFormData(
+    endpoint: string,
+    token: string,
+    formData: FormData
+): Promise<void> {
+
+    const response =
+        await fetch(
+            `${API_URL}${endpoint}`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization:
+                        `Bearer ${token}`
+                },
+                body: formData
+            }
+        );
+
+    if (!response.ok) {
+
+        const text =
+            await response.text();
+
+        throw new Error(
+            text ||
+            `Errore durante la richiesta. Status: ${response.status}`
+        );
+
+    }
+}
 export async function postAuthenticated<T>(
     endpoint: string,
     token: string,
@@ -150,4 +209,6 @@ export async function postAuthenticated<T>(
     }
 
     return await response.json();
+
+
 }

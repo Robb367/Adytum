@@ -3,6 +3,7 @@ using Adytum.API.Models;
 using Adytum.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Adytum.API.Services.Interfaces;
+using Adytum.API.Exceptions;
 
 namespace Adytum.API.Services;
 
@@ -21,18 +22,27 @@ public class DashboardService : IDashboardService
     .CountAsync(b => b.OwnerId == userId);
 
         var recentBooks = await _context.BookCopies
-            .Include(b => b.Book)
-            .Where(b => b.OwnerId == userId)
-            .OrderByDescending(b => b.CreatedAt)
-            .Take(5)
-            .Select(b => new RecentBookDto
-            {
-                BookCopyId = b.Id,
-                Title = b.Book.Title,
-                Author = b.Book.Author,
-                CoverUrl = b.Book.CoverImageUrl
-            })
-            .ToListAsync();
+    .Include(b => b.Book)
+    .Where(b => b.OwnerId == userId)
+    .OrderByDescending(b => b.CreatedAt)
+    .Take(5)
+    .Select(b => new RecentBookDto
+    {
+        BookCopyId = b.Id,
+
+        Title =
+            b.CustomTitle
+            ?? b.Book.Title,
+
+        Author =
+            b.CustomAuthor
+            ?? b.Book.Author,
+
+        CoverImageUrl =
+            b.CustomCoverImageUrl
+            ?? b.Book.CoverImageUrl
+    })
+    .ToListAsync();
 
         var availableBooks = await _context.BookCopies
             .CountAsync(b =>
@@ -59,10 +69,17 @@ public class DashboardService : IDashboardService
                 l.LenderId == userId &&
                 l.Status == LoanStatus.Returned);
 
-        var displayName = await _context.Users
-                    .Where(u => u.Id == userId)
-                    .Select(u => u.DisplayName)
-                    .FirstOrDefaultAsync() ?? string.Empty;
+        var user = await _context.Users
+    .FirstOrDefaultAsync(u => u.Id == userId);
+
+        if (user == null)
+        {
+            throw new NotFoundException("Utente non trovato.");
+        }
+
+        var displayName =
+            user.DisplayName
+            ?? user.Username;
 
         return new DashboardResponse
         {
@@ -73,7 +90,12 @@ public class DashboardService : IDashboardService
             PendingSentRequests = pendingSent,
             RecentBooks = recentBooks,
             TotalLoansCompleted = completedLoans,
-            DisplayName = displayName
+            DisplayName = displayName,
+            Latitude = user.Latitude,
+            Longitude = user.Longitude,
+            SearchRadiusKm = user.SearchRadiusKm,
+            City = user.City,
+            Province = user.Province
         };
     }
 }

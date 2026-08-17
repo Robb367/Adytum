@@ -65,7 +65,7 @@ function RecentBooks({
 
                     {books.map((book) => {
 
-                        const coverUrl = getImageUrl(book.coverUrl);
+                        const coverImageUrl = getImageUrl(book.coverImageUrl);
 
                         return (
 
@@ -81,10 +81,10 @@ function RecentBooks({
 
                                 <div className="book-cover">
 
-                                    {coverUrl ? (
+                                    {coverImageUrl ? (
 
                                         <img
-                                            src={coverUrl}
+                                            src={coverImageUrl}
                                             alt={`Copertina di ${book.title}`}
                                         />
 

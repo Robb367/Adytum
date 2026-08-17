@@ -1,10 +1,20 @@
 .library-page {
+    min-height: calc(100vh - 68px);
 
-    min-height: 100vh;
-
-    padding: 50px;
+    padding: 50px 7% 90px;
 
     color: var(--text);
+
+    background:
+        linear-gradient(
+            rgba(7, 5, 4, 0.78),
+            rgba(7, 5, 4, 0.88)
+        ),
+        url("../../assets/book-details-background.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .library-header {

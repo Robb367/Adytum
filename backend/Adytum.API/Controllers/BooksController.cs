@@ -80,6 +80,33 @@ public class BooksController : ControllerBase
         return Ok(results);
     }
 
+    [HttpPost("{bookCopyId}/cover")]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> UpdateBookCover(
+        int bookCopyId,
+        [FromForm] UpdateBookCoverRequest request)
+    {
+        var ownerIdClaim =
+            User.FindFirstValue(
+                ClaimTypes.NameIdentifier
+            );
+
+        if (ownerIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        var ownerId =
+            int.Parse(ownerIdClaim);
+
+        await _bookService.UpdateBookCoverAsync(
+            bookCopyId,
+            ownerId,
+            request
+        );
+
+        return NoContent();
+    }
     [HttpGet("lookup/{isbn}")]
     public async Task<IActionResult> LookupBook(string isbn)
     {
@@ -166,5 +193,30 @@ public class BooksController : ControllerBase
         {
             message = "Copia aggiornata correttamente."
         });
+    }
+
+    [HttpDelete("{bookCopyId}")]
+    public async Task<IActionResult> DeleteBookCopy(
+    int bookCopyId)
+    {
+        var ownerIdClaim =
+            User.FindFirstValue(
+                ClaimTypes.NameIdentifier
+            );
+
+        if (ownerIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        var ownerId =
+            int.Parse(ownerIdClaim);
+
+        await _bookService.DeleteBookCopyAsync(
+            bookCopyId,
+            ownerId
+        );
+
+        return NoContent();
     }
 }

@@ -148,16 +148,53 @@ public class BookService : IBookService
             .Select(c => new MyLibrary
             {
                 BookCopyId = c.Id,
-                Title = c.Book.Title,
-                Author = c.Book.Author,
+                Title = c.CustomTitle ?? c.Book.Title,
+                Author = c.CustomAuthor ?? c.Book.Author,
                 ISBN = c.Book.ISBN,
                 AvailableForLoan = c.AvailableForLoan,
                 Condition = c.Condition,
-                CoverImageUrl = c.Book.CoverImageUrl
+                CoverImageUrl = c.CustomCoverImageUrl ?? c.Book.CoverImageUrl,
             })
             .ToListAsync();
     }
 
+    public async Task DeleteBookCopyAsync(
+        int bookCopyId,
+        int ownerId)
+    {
+        var bookCopy = await _context.BookCopies
+            .Include(c => c.Book)
+            .FirstOrDefaultAsync(c =>
+                c.Id == bookCopyId &&
+                c.OwnerId == ownerId);
+
+        if (bookCopy == null)
+        {
+            throw new NotFoundException(
+                "Libro non trovato nella tua biblioteca."
+            );
+        }
+
+        var hasActiveLoans =
+            await _context.Loans.AnyAsync(l =>
+                l.BookCopyId == bookCopyId &&
+                (
+                    l.Status == LoanStatus.Pending ||
+                    l.Status == LoanStatus.Accepted
+                )
+            );
+
+        if (hasActiveLoans)
+        {
+            throw new BusinessRuleException(
+                "Non puoi rimuovere questo libro mentre esistono richieste o prestiti attivi."
+            );
+        }
+
+        _context.BookCopies.Remove(bookCopy);
+
+        await _context.SaveChangesAsync();
+    }
     public async Task UpdateBookCopyAsync(
     int bookCopyId,
     int ownerId,
@@ -186,18 +223,139 @@ public class BookService : IBookService
         await _context.SaveChangesAsync();
     }
 
+    public async Task UpdateBookCoverAsync(
+        int bookCopyId,
+        int ownerId,
+        UpdateBookCoverRequest request)
+    {
+        var bookCopy = await _context.BookCopies
+            .FirstOrDefaultAsync(c =>
+                c.Id == bookCopyId &&
+                c.OwnerId == ownerId);
+
+        if (bookCopy == null)
+        {
+            throw new NotFoundException(
+                "Libro non trovato nella tua biblioteca."
+            );
+        }
+
+        string? coverImageUrl = null;
+
+        // Se viene caricato un file, ha la precedenza sull'URL.
+        if (request.CoverImage != null)
+        {
+            var extension = Path
+                .GetExtension(request.CoverImage.FileName)
+                .ToLowerInvariant();
+
+            var allowedExtensions = new[]
+            {
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".webp"
+        };
+
+            if (!allowedExtensions.Contains(extension))
+            {
+                throw new BusinessRuleException(
+                    "Formato copertina non supportato. " +
+                    "Sono ammessi JPG, JPEG, PNG e WEBP."
+                );
+            }
+
+            const long maxFileSize =
+                5 * 1024 * 1024;
+
+            if (request.CoverImage.Length > maxFileSize)
+            {
+                throw new BusinessRuleException(
+                    "La copertina non può superare i 5 MB."
+                );
+            }
+
+            var coversFolder = Path.Combine(
+                _environment.WebRootPath,
+                "covers"
+            );
+
+            Directory.CreateDirectory(
+                coversFolder
+            );
+
+            var fileName =
+                $"{Guid.NewGuid()}{extension}";
+
+            var filePath = Path.Combine(
+                coversFolder,
+                fileName
+            );
+
+            await using var stream =
+                new FileStream(
+                    filePath,
+                    FileMode.Create
+                );
+
+            await request.CoverImage
+                .CopyToAsync(stream);
+
+            coverImageUrl =
+                $"/covers/{fileName}";
+        }
+
+        // Se non abbiamo un file, proviamo l'URL.
+        else if (!string.IsNullOrWhiteSpace(
+            request.CoverImageUrl))
+        {
+            var url =
+                request.CoverImageUrl.Trim();
+
+            if (
+                !Uri.TryCreate(
+                    url,
+                    UriKind.Absolute,
+                    out var uri
+                )
+                ||
+                (
+                    uri.Scheme != Uri.UriSchemeHttp &&
+                    uri.Scheme != Uri.UriSchemeHttps
+                )
+            )
+            {
+                throw new BusinessRuleException(
+                    "L'URL della copertina non è valido."
+                );
+            }
+
+            coverImageUrl = url;
+        }
+        else
+        {
+            throw new BusinessRuleException(
+                "Seleziona una copertina oppure inserisci un URL."
+            );
+        }
+
+        bookCopy.CustomCoverImageUrl =
+            coverImageUrl;
+
+        await _context.SaveChangesAsync();
+    }
     public async Task<List<SearchBookResult>> SearchBooksAsync(string query)
     {
         return await _context.BookCopies
     .Include(c => c.Book)
     .Include(c => c.Owner)
     .Where(c =>
-        c.Book.Title.Contains(query) ||
-        c.Book.Author.Contains(query))
+        (c.CustomTitle ?? c.Book.Title).Contains(query) ||
+        (c.CustomAuthor ?? c.Book.Author).Contains(query))
     .Select(c => new SearchBookResult
     {
         BookCopyId = c.Id,
-        Title = c.Book.Title,
+        Title = c.CustomTitle ?? c.Book.Title,
         Author = c.Book.Author,
         CoverImageUrl = c.Book.CoverImageUrl,
         OwnerDisplayName = c.Owner.DisplayName,
@@ -230,9 +388,9 @@ public class BookService : IBookService
             .Where(c =>
                 c.AvailableForLoan &&
                 (
-                    c.Book.Title.Contains(query) ||
-                    c.Book.Author.Contains(query)
-                ))
+                    (c.CustomTitle ?? c.Book.Title).Contains(query) ||
+                    (c.CustomAuthor ?? c.Book.Author).Contains(query))
+                )
             .ToListAsync();
 
         var results = new List<BooksNearby>();
@@ -254,9 +412,9 @@ public class BookService : IBookService
                 results.Add(new BooksNearby
                 {
                     BookCopyId = copy.Id,
-                    Title = copy.Book.Title,
-                    Author = copy.Book.Author,
-                    CoverImageUrl = copy.Book.CoverImageUrl,
+                    Title = copy.CustomTitle ?? copy.Book.Title,
+                    Author = copy.CustomAuthor ?? copy.Book.Author,
+                    CoverImageUrl = copy.CustomCoverImageUrl ?? copy.Book.CoverImageUrl,
                     OwnerDisplayName = copy.Owner.DisplayName,
                     City = copy.Owner.City,
                     Province = copy.Owner.Province,
@@ -297,15 +455,16 @@ public class BookService : IBookService
         return new BookDetailsResponse
         {
             BookCopyId = bookCopy.Id,
-            Title = bookCopy.Book.Title,
-            Author = bookCopy.Book.Author,
+            Title = bookCopy.CustomTitle ?? bookCopy.Book.Title,
+            Author = bookCopy.CustomAuthor ?? bookCopy.Book.Author,
             ISBN = bookCopy.Book.ISBN,
-            Publisher = bookCopy.Book.Publisher,
-            PublicationYear = bookCopy.Book.PublicationYear,
-            Genre = bookCopy.Book.Genre,
+            Publisher = bookCopy.CustomPublisher ?? bookCopy.Book.Publisher,
+            PublicationYear = bookCopy.CustomPublicationYear ?? bookCopy.Book.PublicationYear,
+            Genre = bookCopy.CustomGenre ?? bookCopy.Book.Genre,
             Language = bookCopy.Book.Language,
-            Description = bookCopy.Book.Description,
-            CoverImageUrl = bookCopy.Book.CoverImageUrl,
+            Pages = bookCopy.CustomPages ?? bookCopy.Book.Pages,
+            Description = bookCopy.CustomDescription ?? bookCopy.Book.Description,
+            CoverImageUrl = bookCopy.CustomCoverImageUrl ?? bookCopy.Book.CoverImageUrl,
             Condition = bookCopy.Condition,
             AvailableForLoan = bookCopy.AvailableForLoan,
             OwnerDisplayName = bookCopy.Owner.DisplayName,

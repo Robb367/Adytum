@@ -23,6 +23,7 @@ public class BookDetailsResponse
     public string Description { get; set; } = string.Empty;
 
     public string CoverImageUrl { get; set; } = string.Empty;
+    public int? Pages { get; set; }
 
     public BookCopyCondition Condition { get; set; }
 

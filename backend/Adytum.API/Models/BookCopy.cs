@@ -21,4 +21,20 @@ public class BookCopy
     public DateTime CreatedAt { get; set; }
 
     public ICollection<Loan> Loans { get; set; } = new List<Loan>();
+
+    public string? CustomTitle { get; set; }
+
+    public string? CustomAuthor { get; set; }
+
+    public string? CustomPublisher { get; set; }
+
+    public int? CustomPublicationYear { get; set; }
+
+    public string? CustomGenre { get; set; }
+
+    public int? CustomPages { get; set; }
+
+    public string? CustomDescription { get; set; }
+
+    public string? CustomCoverImageUrl { get; set; }
 }

@@ -11,6 +11,7 @@ import {
 import { useAuth } from "../../contexts/AuthContext";
 
 import {
+    deleteBookCopy,
     getBookDetails,
     toggleBookAvailability,
     type BookDetails
@@ -52,6 +53,45 @@ function BookDetailsPage() {
 
     const [error, setError] =
         useState("");
+
+    async function handleDeleteBook() {
+
+        if (!token || !book) {
+            return;
+        }
+
+        const confirmed =
+            window.confirm(
+                `Vuoi davvero rimuovere "${book.title}" dalla tua biblioteca?`
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+
+            await deleteBookCopy(
+                book.bookCopyId,
+                token
+            );
+
+            navigate("/library");
+
+        }
+        catch (err) {
+
+            console.error(
+                "Errore rimozione libro:",
+                err
+            );
+
+            if (err instanceof Error) {
+                setLoanMessage(err.message);
+            }
+
+        }
+    }
 
     async function handleRequestLoan() {
 
@@ -100,6 +140,7 @@ function BookDetailsPage() {
 
         }
     }
+
 
     async function handleToggleAvailability() {
 
@@ -196,6 +237,8 @@ function BookDetailsPage() {
 
     const condition =
         getBookConditionLabel(book.condition);
+
+
 
     return (
 
@@ -361,8 +404,12 @@ function BookDetailsPage() {
                                                 ? "Rendi non disponibile"
                                                 : "Rendi disponibile"
                                         }
-
                                         onClick={handleToggleAvailability}
+                                    />
+
+                                    <SecondaryButton
+                                        text="Rimuovi dalla biblioteca"
+                                        onClick={handleDeleteBook}
                                     />
 
                                 </div>
@@ -427,6 +474,7 @@ function BookDetailsPage() {
 
                                 )}
 
+
                             </>
 
                         )}
@@ -435,9 +483,9 @@ function BookDetailsPage() {
 
                 </div>
 
-            
 
-        </section>
+
+            </section>
 
         </main >
 

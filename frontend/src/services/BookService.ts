@@ -1,4 +1,4 @@
-import { get, put, patch } from "./api";
+import { get, put, patch, remove, postFormData } from "./api";
 
 export interface LibraryBook {
     bookCopyId: number;
@@ -23,27 +23,46 @@ export interface BookDetails {
     bookCopyId: number;
     title: string;
     author: string;
-    isbn: string;
-    publisher: string;
-    publicationYear: number;
-    genre: string;
-    language: string;
-    description: string;
+    isbn: string | null;
+    publisher: string | null;
+    publicationYear: number | null;
+    genre: string | null;
+    language: string | null;
+    pages: number | null;
+    description: string | null;
     coverImageUrl: string | null;
     condition: number;
     availableForLoan: boolean;
     ownerDisplayName: string;
-    city: string;
-    province: string;
+    city: string | null;
+    province: string | null;
     distanceKm: number;
     isOwnedByCurrentUser: boolean;
-    personalNotes: string;
+    personalNotes: string | null;
 }
 
 export interface UpdateBookCopyRequest {
     condition: number;
     availableForLoan: boolean;
-    personalNotes: string;
+    personalNotes: string | null;
+    customTitle: string | null;
+    customAuthor: string | null;
+    customPublisher: string | null;
+    customPublicationYear: number | null;
+    customGenre: string | null;
+    customPages: number | null;
+    customDescription: string | null;
+}
+
+export async function deleteBookCopy(
+    bookCopyId: number,
+    token: string
+): Promise<void> {
+
+    await remove(
+        `/Books/${bookCopyId}`,
+        token
+    );
 }
 
 export async function getBookDetails(
@@ -92,6 +111,39 @@ export async function toggleBookAvailability(
     return response.availableForLoan;
 }
 
+export async function updateBookCover(
+    bookCopyId: number,
+    token: string,
+    coverFile: File | null,
+    coverUrl: string
+): Promise<void> {
+
+    const formData =
+        new FormData();
+
+    if (coverFile) {
+
+        formData.append(
+            "CoverImage",
+            coverFile
+        );
+
+    }
+    else if (coverUrl.trim()) {
+
+        formData.append(
+            "CoverImageUrl",
+            coverUrl.trim()
+        );
+
+    }
+
+    await postFormData(
+        `/Books/${bookCopyId}/cover`,
+        token,
+        formData
+    );
+}
 export interface SearchBookResult {
     bookCopyId: number;
     title: string;
