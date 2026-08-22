@@ -18,6 +18,8 @@ public class AdytumDbContext : DbContext
 
     public DbSet<Loan> Loans { get; set; }
 
+    public DbSet<BookView> BookViews { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -30,6 +32,18 @@ public class AdytumDbContext : DbContext
         .HasMany(u => u.BookCopies)
         .WithOne(b => b.Owner)
         .HasForeignKey(b => b.OwnerId);
+
+        modelBuilder.Entity<BookView>()
+        .HasOne(bv => bv.BookCopy)
+        .WithMany()
+        .HasForeignKey(bv => bv.BookCopyId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<BookView>()
+        .HasOne(bv => bv.Viewer)
+        .WithMany()
+        .HasForeignKey(bv => bv.ViewerId)
+        .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Loan>()
         .HasOne(l => l.BookCopy)

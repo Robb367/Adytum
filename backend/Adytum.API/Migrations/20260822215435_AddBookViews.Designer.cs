@@ -4,6 +4,7 @@ using Adytum.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Adytum.API.Migrations
 {
     [DbContext(typeof(AdytumDbContext))]
-    partial class AdytumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260822215435_AddBookViews")]
+    partial class AddBookViews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -131,32 +134,6 @@ namespace Adytum.API.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("BookCopies");
-                });
-
-            modelBuilder.Entity("Adytum.API.Models.BookView", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BookCopyId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ViewedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ViewerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookCopyId");
-
-                    b.HasIndex("ViewerId");
-
-                    b.ToTable("BookViews");
                 });
 
             modelBuilder.Entity("Adytum.API.Models.Loan", b =>
@@ -289,25 +266,6 @@ namespace Adytum.API.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("Adytum.API.Models.BookView", b =>
-                {
-                    b.HasOne("Adytum.API.Models.BookCopy", "BookCopy")
-                        .WithMany()
-                        .HasForeignKey("BookCopyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Adytum.API.Models.User", "Viewer")
-                        .WithMany()
-                        .HasForeignKey("ViewerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("BookCopy");
-
-                    b.Navigation("Viewer");
                 });
 
             modelBuilder.Entity("Adytum.API.Models.Loan", b =>

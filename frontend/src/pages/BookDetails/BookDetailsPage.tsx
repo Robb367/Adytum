@@ -14,6 +14,7 @@ import {
     deleteBookCopy,
     getBookDetails,
     toggleBookAvailability,
+    registerBookView,
     type BookDetails
 } from "../../services/BookService";
 
@@ -195,6 +196,26 @@ function BookDetailsPage() {
 
                 setBook(data);
 
+                if (!data.isOwnedByCurrentUser) {
+
+                    try {
+
+                        await registerBookView(
+                            data.bookCopyId,
+                            token
+                        );
+
+                    }
+                    catch (viewError) {
+
+                        console.error(
+                            "Errore registrazione visualizzazione:",
+                            viewError
+                        );
+
+                    }
+
+                }
             }
             catch (err) {
 

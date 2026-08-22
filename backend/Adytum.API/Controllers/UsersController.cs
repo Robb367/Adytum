@@ -1,6 +1,8 @@
 using Adytum.API.DTOs;
 using Adytum.API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Adytum.API.Controllers;
 
@@ -54,4 +56,56 @@ public class UsersController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("search")]
+    [Authorize]
+    public async Task<IActionResult> SearchUsers(
+    [FromQuery] string query)
+    {
+        var userIdClaim =
+            User.FindFirstValue(
+                ClaimTypes.NameIdentifier
+            );
+
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        var currentUserId =
+            int.Parse(userIdClaim);
+
+        var users =
+            await _userService.SearchUsersAsync(
+                query,
+                currentUserId
+            );
+
+        return Ok(users);
+    }
+
+    [HttpGet("{userId}/available-books")]
+    [Authorize]
+    public async Task<IActionResult> GetAvailableBooks(
+        int userId)
+    {
+        var books =
+            await _userService
+                .GetAvailableBooksByUserAsync(userId);
+
+        return Ok(books);
+    }
+
+    [HttpGet("{userId}/profile")]
+    [Authorize]
+    public async Task<IActionResult> GetPublicUserProfile(
+        int userId)
+    {
+        var profile =
+            await _userService
+                .GetPublicUserProfileAsync(userId);
+
+        return Ok(profile);
+    }
+
 }

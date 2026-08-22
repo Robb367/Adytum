@@ -19,4 +19,5 @@ public interface IBookService
     Task<bool> ToggleBookAvailabilityAsync(int bookCopyId, int ownerId);
     Task UpdateBookCopyAsync(int bookCopyId, int ownerId, UpdateBookCopyRequest request);
     Task UpdateBookCoverAsync(int bookCopyId, int ownerId, UpdateBookCoverRequest request);
+    Task RegisterBookViewAsync(int bookCopyId, int viewerId);
 }

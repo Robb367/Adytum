@@ -1,4 +1,5 @@
 namespace Adytum.API.DTOs.Dashboard;
+
 public class DashboardResponse
 {
     public int TotalBooks { get; set; }
@@ -14,4 +15,8 @@ public class DashboardResponse
     public int SearchRadiusKm { get; set; }
     public string? City { get; set; }
     public string? Province { get; set; }
+    public int TotalViews { get; set; }
+    public int ViewsLast30Days { get; set; }
+    public MostViewedBookDto? MostViewedBook { get; set; }
+    public List<DashboardViewPointDto> ViewsByDay { get; set; } = new();
 }

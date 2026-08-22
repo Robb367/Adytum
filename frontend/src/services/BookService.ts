@@ -1,4 +1,4 @@
-import { get, put, patch, remove, postFormData } from "./api";
+import { get, put, patch, remove, postAuthenticated, postFormData } from "./api";
 
 export interface LibraryBook {
     bookCopyId: number;
@@ -185,6 +185,17 @@ export async function searchNearbyBooks(
 
     return await get<NearbyBook[]>(
         `/Books/nearby?query=${encodeURIComponent(query)}`,
+        token
+    );
+}
+
+export async function registerBookView(
+    bookCopyId: number,
+    token: string
+): Promise<void> {
+
+    await postAuthenticated(
+        `/Books/${bookCopyId}/view`,
         token
     );
 }

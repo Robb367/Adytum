@@ -1,0 +1,73 @@
+.map-profile-button {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 12px;
+    padding: 9px 12px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.42);
+
+    background:
+        rgba(185, 152, 95, 0.10);
+
+    color: #c9ad78;
+
+    font-family: "Cinzel", serif;
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.map-profile-button:hover {
+    background:
+        rgba(185, 152, 95, 0.20);
+
+    border-color: #c9ad78;
+
+    transform: translateY(-1px);
+}
+
+.adytum-map-popup {
+    min-width: 170px;
+
+    font-family: "Lora", serif;
+
+    color: #eee4d5;
+}
+
+.adytum-map-popup strong {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-family: "Cinzel", serif;
+    font-size: 0.95rem;
+
+    color: #d7bb87;
+}
+
+.adytum-map-popup p {
+    margin: 5px 0;
+
+    color:
+        rgba(238, 228, 213, 0.72);
+}
+
+.adytum-map-popup span {
+    display: block;
+
+    margin-top: 6px;
+
+    color:
+        rgba(238, 228, 213, 0.55);
+
+    font-size: 0.85rem;
+}

@@ -3,9 +3,13 @@ import {
     useState
 } from "react";
 
-import { useNavigate } from "react-router-dom";
+import {
+    useNavigate
+} from "react-router-dom";
 
-import { useAuth } from "../../contexts/AuthContext";
+import {
+    useAuth
+} from "../../contexts/AuthContext";
 
 import {
     searchBooks,
@@ -14,77 +18,163 @@ import {
 
 import "./ExplorePage.css";
 
-type SearchMode = "all" | "nearby";
+
+type SearchMode =
+    "all" |
+    "nearby";
+
+type SearchType =
+    "books" |
+    "users";
+
 
 function ExplorePage() {
 
-    const navigate = useNavigate();
+    const navigate =
+        useNavigate();
 
-    const { token } = useAuth();
+    const { token } =
+        useAuth();
 
-    const [query, setQuery] = useState("");
-    const [mode, setMode] = useState<SearchMode>("all");
-    const [showSuggestions, setShowSuggestions] = useState(false);
-    const [suggestions, setSuggestions] = useState<SearchBookResult[]>([]);
+
+    const [query, setQuery] =
+        useState("");
+
+    const [mode, setMode] =
+        useState<SearchMode>("all");
+
+    const [searchType, setSearchType] =
+        useState<SearchType>("books");
+
+    const [
+        showSuggestions,
+        setShowSuggestions
+    ] = useState(false);
+
+    const [
+        suggestions,
+        setSuggestions
+    ] = useState<SearchBookResult[]>([]);
+
 
     useEffect(() => {
 
-        const trimmedQuery = query.trim();
+        const trimmedQuery =
+            query.trim();
 
-        if (!token || trimmedQuery.length < 2) {
+
+        /*
+         * Per ora l'autocomplete esiste
+         * solamente per i libri.
+         */
+        if (
+            searchType !== "books" ||
+            !token ||
+            trimmedQuery.length < 2
+        ) {
+
             setSuggestions([]);
+
             setShowSuggestions(false);
+
             return;
         }
 
-        const timeout = setTimeout(async () => {
 
-            try {
+        const timeout =
+            setTimeout(
+                async () => {
 
-                const data = await searchBooks(
-                    trimmedQuery,
-                    token
-                );
+                    try {
 
-                setSuggestions(
-                    data.slice(0, 6)
-                );
+                        const data =
+                            await searchBooks(
+                                trimmedQuery,
+                                token
+                            );
 
-                setShowSuggestions(true);
+                        setSuggestions(
+                            data.slice(0, 6)
+                        );
 
-            }
-            catch (err) {
+                        setShowSuggestions(true);
 
-                console.error(
-                    "Errore caricamento suggerimenti:",
-                    err
-                );
+                    }
+                    catch (err) {
 
-                setSuggestions([]);
-                setShowSuggestions(false);
-            }
+                        console.error(
+                            "Errore caricamento suggerimenti:",
+                            err
+                        );
 
-        }, 300);
+                        setSuggestions([]);
+
+                        setShowSuggestions(false);
+
+                    }
+
+                },
+                300
+            );
+
 
         return () => {
-            clearTimeout(timeout);
+
+            clearTimeout(
+                timeout
+            );
+
         };
 
-    }, [query, token]);
+    }, [
+        query,
+        token,
+        searchType
+    ]);
+
+
     function handleSearch() {
 
-        const trimmedQuery = query.trim();
+        const trimmedQuery =
+            query.trim();
 
         if (!trimmedQuery) {
             return;
         }
 
+
+        if (searchType === "users") {
+
+            navigate(
+                `/explore/results?q=${encodeURIComponent(trimmedQuery)}&type=users`
+            );
+
+            return;
+        }
+
+
         navigate(
-            `/explore/results?q=${encodeURIComponent(trimmedQuery)}&mode=${mode}`
+            `/explore/results?q=${encodeURIComponent(trimmedQuery)}&type=books&mode=${mode}`
         );
+
     }
 
+
+    function handleSearchTypeChange(
+        type: SearchType
+    ) {
+
+        setSearchType(type);
+
+        setSuggestions([]);
+
+        setShowSuggestions(false);
+
+    }
+
+
     return (
+
         <main className="explore-page">
 
             <section className="explore-hero">
@@ -95,29 +185,92 @@ function ExplorePage() {
                         Esplora Adytum
                     </p>
 
+
                     <h1>
                         Trova la tua prossima storia.
                     </h1>
 
+
                     <p className="explore-subtitle">
-                        Cerca tra i libri condivisi dai lettori di Adytum.
+
+                        {searchType === "books"
+                            ? "Cerca tra i libri condivisi dai lettori di Adytum."
+                            : "Scopri i lettori e le biblioteche della comunità."
+                        }
+
                     </p>
+
+
+                    {/* LIBRI / UTENTI */}
+
+                    <div className="explore-search-type">
+
+                        <button
+                            type="button"
+                            className={
+                                searchType === "books"
+                                    ? "active"
+                                    : ""
+                            }
+                            onClick={() =>
+                                handleSearchTypeChange(
+                                    "books"
+                                )
+                            }
+                        >
+                            Libri
+                        </button>
+
+
+                        <button
+                            type="button"
+                            className={
+                                searchType === "users"
+                                    ? "active"
+                                    : ""
+                            }
+                            onClick={() =>
+                                handleSearchTypeChange(
+                                    "users"
+                                )
+                            }
+                        >
+                            Utenti
+                        </button>
+
+                    </div>
+
+
+                    {/* SEARCH BAR */}
 
                     <div className="explore-search">
 
                         <input
                             type="text"
                             value={query}
-                            placeholder="Cerca per titolo o autore..."
+                            placeholder={
+                                searchType === "books"
+                                    ? "Cerca per titolo o autore..."
+                                    : "Cerca per nome o username..."
+                            }
                             onChange={(event) =>
-                                setQuery(event.target.value)
+                                setQuery(
+                                    event.target.value
+                                )
                             }
                             onKeyDown={(event) => {
-                                if (event.key === "Enter") {
+
+                                if (
+                                    event.key === "Enter"
+                                ) {
+
                                     handleSearch();
+
                                 }
+
                             }}
                         />
+
 
                         <button
                             type="button"
@@ -128,75 +281,115 @@ function ExplorePage() {
 
                     </div>
 
-                    {showSuggestions && suggestions.length > 0 && (
 
-                        <div className="explore-suggestions">
+                    {/* AUTOCOMPLETE LIBRI */}
 
-                            {suggestions.map((book) => (
+                    {
+                        searchType === "books" &&
+                        showSuggestions &&
+                        suggestions.length > 0 &&
+                        (
 
-                                <button
-                                    type="button"
-                                    key={book.bookCopyId}
-                                    className="explore-suggestion"
-                                    onClick={() => {
-                                        setQuery(book.title);
-                                        setShowSuggestions(false);
-                                    }}
-                                >
+                            <div className="explore-suggestions">
 
-                                    <strong>
-                                        {book.title}
-                                    </strong>
+                                {suggestions.map(
+                                    (book) => (
 
-                                    <span>
-                                        {book.author}
-                                    </span>
+                                        <button
+                                            type="button"
+                                            key={
+                                                book.bookCopyId
+                                            }
+                                            className="explore-suggestion"
+                                            onClick={() => {
 
-                                </button>
+                                                setQuery(
+                                                    book.title
+                                                );
 
-                            ))}
+                                                setShowSuggestions(
+                                                    false
+                                                );
 
-                        </div>
+                                            }}
+                                        >
 
-                    )}
-                    <div className="explore-modes">
+                                            <strong>
+                                                {book.title}
+                                            </strong>
 
-                        <button
-                            type="button"
-                            className={
-                                mode === "all"
-                                    ? "active"
-                                    : ""
-                            }
-                            onClick={() =>
-                                setMode("all")
-                            }
-                        >
-                            Tutti i libri
-                        </button>
+                                            <span>
+                                                {book.author}
+                                            </span>
 
-                        <button
-                            type="button"
-                            className={
-                                mode === "nearby"
-                                    ? "active"
-                                    : ""
-                            }
-                            onClick={() =>
-                                setMode("nearby")
-                            }
-                        >
-                            Vicino a me
-                        </button>
+                                        </button>
 
-                    </div>
+                                    )
+                                )}
+
+                            </div>
+
+                        )
+                    }
+
+
+                    {/* TUTTI / VICINO A ME */}
+
+                    {
+                        searchType === "books" && (
+
+                            <div className="explore-modes">
+
+                                <div className="explore-modes-buttons">
+
+                                    <button
+                                        type="button"
+                                        className={
+                                            mode === "all"
+                                                ? "active"
+                                                : ""
+                                        }
+                                        onClick={() =>
+                                            setMode(
+                                                "all"
+                                            )
+                                        }
+                                    >
+                                        Tutti i libri
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        className={
+                                            mode === "nearby"
+                                                ? "active"
+                                                : ""
+                                        }
+                                        onClick={() =>
+                                            setMode(
+                                                "nearby"
+                                            )
+                                        }
+                                    >
+                                        Vicino a me
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        )
+                    }
 
                 </div>
 
             </section>
 
         </main>
+
     );
 }
+
 
 export default ExplorePage;

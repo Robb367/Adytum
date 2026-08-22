@@ -429,6 +429,54 @@ public class BookService : IBookService
             .ToList();
     }
 
+    public async Task RegisterBookViewAsync(
+        int bookCopyId,
+        int viewerId)
+    {
+        var bookCopy = await _context.BookCopies
+            .FirstOrDefaultAsync(c =>
+                c.Id == bookCopyId);
+
+        if (bookCopy == null)
+        {
+            throw new NotFoundException(
+                "Libro non trovato."
+            );
+        }
+
+        // Il proprietario non genera visualizzazioni
+        if (bookCopy.OwnerId == viewerId)
+        {
+            return;
+        }
+
+        var threshold =
+            DateTime.UtcNow.AddMinutes(-30);
+
+        var recentViewExists =
+            await _context.BookViews
+                .AnyAsync(v =>
+                    v.BookCopyId == bookCopyId &&
+                    v.ViewerId == viewerId &&
+                    v.ViewedAt >= threshold
+                );
+
+        if (recentViewExists)
+        {
+            return;
+        }
+
+        var view = new BookView
+        {
+            BookCopyId = bookCopyId,
+            ViewerId = viewerId,
+            ViewedAt = DateTime.UtcNow
+        };
+
+        _context.BookViews.Add(view);
+
+        await _context.SaveChangesAsync();
+    }
     public async Task<BookDetailsResponse> GetBookDetailsAsync(
     int bookCopyId,
     int currentUserId)

@@ -107,3 +107,29 @@
         0 0 0 4px rgba(122, 36, 31, 0.18),
         0 5px 16px rgba(0, 0, 0, 0.7);
 }
+
+.map-profile-button {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 12px;
+    padding: 8px 12px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.45);
+
+    background:
+        rgba(185, 152, 95, 0.10);
+
+    color: #b9985f;
+
+    font-family: "Cinzel", serif;
+
+    cursor: pointer;
+}
+
+.map-profile-button:hover {
+    background:
+        rgba(185, 152, 95, 0.20);
+}

@@ -16,6 +16,8 @@ import "./DashboardPage.css";
 import StatCard from "../../components/dashboard/StatCard";
 import RecentBooks from "../../components/dashboard/RecentBooks";
 import UserMap from "../../components/map/UserMap";
+import ViewsChart from "./ViewsChart";
+import { getImageUrl } from "../../utils/imageUrl";
 
 
 function DashboardPage() {
@@ -149,6 +151,123 @@ function DashboardPage() {
                             description="Prestiti attualmente in corso"
                             onClick={() => navigate("/loans")}
                         />
+
+                    </section>
+
+                    <section className="dashboard-activity">
+
+                        <div className="dashboard-view-stats">
+
+                            <div className="dashboard-view-stat">
+
+                                <span>
+                                    {dashboard.totalViews}
+                                </span>
+
+                                <p>
+                                    Visualizzazioni totali
+                                </p>
+
+                            </div>
+
+
+                            <div className="dashboard-view-stat">
+
+                                <span>
+                                    {dashboard.viewsLast30Days}
+                                </span>
+
+                                <p>
+                                    Negli ultimi 30 giorni
+                                </p>
+
+                            </div>
+
+
+                            <div className="dashboard-view-stat">
+
+                                <span>
+                                    {dashboard.totalLoansCompleted}
+                                </span>
+
+                                <p>
+                                    Prestiti conclusi
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <ViewsChart
+                            data={dashboard.viewsByDay}
+                        />
+
+
+                        {dashboard.mostViewedBook && (
+
+                            <article
+                                className="dashboard-most-viewed"
+                                onClick={() =>
+                                    navigate(
+                                        `/books/${dashboard.mostViewedBook!.bookCopyId}`
+                                    )
+                                }
+                            >
+
+                                <div className="dashboard-most-viewed-cover">
+
+                                    {dashboard.mostViewedBook.coverImageUrl ? (
+
+                                        <img
+                                            src={
+                                                getImageUrl(
+                                                    dashboard.mostViewedBook
+                                                        .coverImageUrl
+                                                ) ?? ""
+                                            }
+                                            alt={
+                                                dashboard.mostViewedBook.title
+                                            }
+                                        />
+
+                                    ) : (
+
+                                        <span>
+                                            ✦
+                                        </span>
+
+                                    )}
+
+                                </div>
+
+
+                                <div className="dashboard-most-viewed-info">
+
+                                    <p className="section-eyebrow">
+                                        Il più osservato
+                                    </p>
+
+                                    <h2>
+                                        {dashboard.mostViewedBook.title}
+                                    </h2>
+
+                                    <p>
+                                        {dashboard.mostViewedBook.author}
+                                    </p>
+
+                                    <span>
+                                        {dashboard.mostViewedBook.views === 1
+                                            ? "1 visualizzazione"
+                                            : `${dashboard.mostViewedBook.views} visualizzazioni`
+                                        }
+                                    </span>
+
+                                </div>
+
+                            </article>
+
+                        )}
 
                     </section>
 

@@ -1,0 +1,375 @@
+.public-profile-page {
+    min-height: calc(100vh - 68px);
+
+    padding: 42px 7% 80px;
+
+    color: var(--text);
+
+    background:
+        linear-gradient(
+            rgba(7, 5, 4, 0.76),
+            rgba(7, 5, 4, 0.88)
+        ),
+        url("../../assets/book-details-background.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.public-profile-back {
+    margin-bottom: 28px;
+
+    border: none;
+    background: transparent;
+
+    color: var(--gold);
+
+    font-family: "Cinzel", serif;
+
+    cursor: pointer;
+}
+
+.public-profile-card {
+    max-width: 1000px;
+
+    margin: 0 auto;
+
+    padding: 42px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.22);
+
+    background:
+        rgba(8, 6, 5, 0.72);
+
+    backdrop-filter: blur(6px);
+}
+
+.public-profile-header {
+    display: flex;
+
+    gap: 30px;
+
+    align-items: center;
+}
+
+.public-profile-avatar {
+    flex-shrink: 0;
+
+    width: 150px;
+    height: 150px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.32);
+
+    overflow: hidden;
+}
+
+.public-profile-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.public-profile-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(10, 8, 6, 0.82);
+
+    color: var(--gold);
+
+    font-size: 2rem;
+}
+
+.public-profile-identity h1 {
+    margin: 6px 0 4px;
+
+    font-family: "Cinzel", serif;
+
+    font-size: 2.3rem;
+
+    font-weight: 500;
+}
+
+.public-profile-username,
+.public-profile-location,
+.public-profile-member-since {
+    margin: 6px 0;
+
+    color:
+        rgba(238, 228, 213, 0.62);
+}
+
+.public-profile-bio {
+    margin-top: 36px;
+
+    padding-top: 28px;
+
+    border-top:
+        1px solid rgba(190, 156, 96, 0.16);
+}
+
+.public-profile-bio h2 {
+    font-family: "Cinzel", serif;
+
+    font-size: 1.2rem;
+
+    color: #eee4d5;
+}
+
+.public-profile-bio p {
+    line-height: 1.7;
+
+    color:
+        rgba(238, 228, 213, 0.72);
+}
+
+.public-profile-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-top: 34px;
+}
+
+.public-profile-stat {
+    padding: 22px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.20);
+
+    background:
+        rgba(10, 8, 6, 0.60);
+}
+
+.public-profile-stat span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-family: "Cinzel", serif;
+
+    font-size: 1.8rem;
+
+    color: #eee4d5;
+}
+
+.public-profile-stat p {
+    margin: 0;
+
+    color:
+        rgba(238, 228, 213, 0.58);
+}
+
+.public-profile-actions {
+    margin-top: 30px;
+}
+
+.public-profile-actions button {
+    padding: 13px 22px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.42);
+
+    background:
+        rgba(185, 152, 95, 0.10);
+
+    color: var(--gold);
+
+    font-family: "Cinzel", serif;
+
+    cursor: pointer;
+}
+
+.public-profile-actions button:hover {
+    background:
+        rgba(185, 152, 95, 0.18);
+
+    border-color: var(--gold);
+}
+
+@media (max-width: 700px) {
+
+    .public-profile-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .public-profile-stats {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.public-user-books-page {
+    min-height: calc(100vh - 68px);
+
+    padding: 42px 7% 80px;
+
+    color: var(--text);
+
+    background:
+        linear-gradient(
+            rgba(7, 5, 4, 0.76),
+            rgba(7, 5, 4, 0.88)
+        ),
+        url("../../assets/book-details-background.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.public-user-books-back {
+    margin-bottom: 24px;
+
+    border: none;
+    background: transparent;
+
+    color: var(--gold);
+
+    font-family: "Cinzel", serif;
+
+    cursor: pointer;
+}
+
+.public-user-books-heading {
+    margin-bottom: 32px;
+}
+
+.public-user-books-heading h1 {
+    margin: 6px 0 0;
+
+    font-family: "Cinzel", serif;
+    font-size: 2rem;
+    font-weight: 500;
+
+    color: #eee4d5;
+}
+
+.public-user-books-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(180px, 220px));
+
+    gap: 28px;
+
+    align-items: start;
+}
+
+.public-user-book-card {
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.public-user-book-card:hover {
+    transform: translateY(-4px);
+}
+
+.public-user-book-cover {
+    width: 100%;
+
+    aspect-ratio: 2 / 3;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.28);
+
+    background:
+        rgba(9, 7, 5, 0.82);
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+.public-user-book-cover img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+.public-user-book-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--gold);
+
+    font-size: 1.5rem;
+}
+
+.public-user-book-info {
+    padding-top: 12px;
+}
+
+.public-user-book-info h2 {
+    margin: 0;
+
+    font-family: "Cinzel", serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    color: #eee4d5;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.public-user-book-info p {
+    margin: 6px 0 0;
+
+    color:
+        rgba(238, 228, 213, 0.62);
+
+    font-family: "Lora", serif;
+    font-size: 0.88rem;
+}
+
+.public-user-books-empty {
+    padding: 40px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.18);
+
+    background:
+        rgba(8, 6, 5, 0.55);
+
+    color:
+        rgba(238, 228, 213, 0.62);
+}
+
+@media (max-width: 700px) {
+
+    .public-user-books-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 18px;
+    }
+
+}

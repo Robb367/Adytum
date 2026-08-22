@@ -81,6 +81,125 @@ public class DashboardService : IDashboardService
             user.DisplayName
             ?? user.Username;
 
+        var totalViews =
+            await _context.BookViews
+                .CountAsync(v =>
+                    v.BookCopy.OwnerId == userId
+                );
+
+
+        var thirtyDaysAgo =
+            DateTime.UtcNow
+                .Date
+                .AddDays(-29);
+
+
+        var viewsLast30Days =
+            await _context.BookViews
+                .CountAsync(v =>
+                    v.BookCopy.OwnerId == userId &&
+                    v.ViewedAt >= thirtyDaysAgo
+                );
+
+        var mostViewedBook =
+            await _context.BookViews
+
+                .Where(v =>
+                    v.BookCopy.OwnerId == userId
+                )
+
+                .GroupBy(v => new
+                {
+                    v.BookCopyId,
+
+                    Title =
+                        v.BookCopy.CustomTitle
+                        ?? v.BookCopy.Book.Title,
+
+                    Author =
+                        v.BookCopy.CustomAuthor
+                        ?? v.BookCopy.Book.Author,
+
+                    CoverImageUrl =
+                        v.BookCopy.CustomCoverImageUrl
+                        ?? v.BookCopy.Book.CoverImageUrl
+                })
+
+                .Select(g =>
+                    new MostViewedBookDto
+                    {
+                        BookCopyId =
+                            g.Key.BookCopyId,
+
+                        Title =
+                            g.Key.Title,
+
+                        Author =
+                            g.Key.Author,
+
+                        CoverImageUrl =
+                            g.Key.CoverImageUrl,
+
+                        Views =
+                            g.Count()
+                    }
+                )
+
+                .OrderByDescending(b =>
+                    b.Views
+                )
+
+                .FirstOrDefaultAsync();
+
+        var rawViewsByDay =
+            await _context.BookViews
+
+                .Where(v =>
+                    v.BookCopy.OwnerId == userId &&
+                    v.ViewedAt >= thirtyDaysAgo
+                )
+
+                .GroupBy(v =>
+                    v.ViewedAt.Date
+                )
+
+                .Select(g =>
+                    new
+                    {
+                        Date = g.Key,
+                        Views = g.Count()
+                    }
+                )
+
+                .ToListAsync();
+
+        var viewsByDay =
+            Enumerable
+                .Range(0, 30)
+
+                .Select(i =>
+                {
+                    var date =
+                        thirtyDaysAgo
+                            .AddDays(i);
+
+                    var day =
+                        rawViewsByDay
+                            .FirstOrDefault(x =>
+                                x.Date == date
+                            );
+
+                    return new DashboardViewPointDto
+                    {
+                        Date = date,
+
+                        Views =
+                            day?.Views ?? 0
+                    };
+                })
+
+                .ToList();
+
         return new DashboardResponse
         {
             TotalBooks = totalBooks,
@@ -95,7 +214,11 @@ public class DashboardService : IDashboardService
             Longitude = user.Longitude,
             SearchRadiusKm = user.SearchRadiusKm,
             City = user.City,
-            Province = user.Province
+            Province = user.Province,
+            TotalViews = totalViews,
+            ViewsLast30Days = viewsLast30Days,
+            MostViewedBook = mostViewedBook,
+            ViewsByDay = viewsByDay
         };
     }
 }

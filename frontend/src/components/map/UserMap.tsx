@@ -9,6 +9,7 @@ import {
 import L from "leaflet";
 
 import type { NearbyUser } from "../../services/MapService";
+import { useNavigate } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 import "./UserMap.css";
 
@@ -60,6 +61,8 @@ function UserMap({
     city,
     province
 }: UserMapProps) {
+
+    const navigate = useNavigate();
 
     return (
 
@@ -143,6 +146,16 @@ function UserMap({
                                         : ""}
                                 </span>
                             )}
+
+                            <button
+                                type="button"
+                                className="map-profile-button"
+                                onClick={() =>
+                                    navigate(`/users/${user.userId}`)
+                                }
+                            >
+                                Vedi profilo
+                            </button>
 
                         </div>
 

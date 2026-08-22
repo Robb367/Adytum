@@ -14,6 +14,9 @@ import AppShell from "../components/layout/AppShell";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import AddBookPage from "../pages/Library/AddBookPage";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
+import PublicProfilePage from "../pages/ProfilePage/PublicProfilePage";
+import PublicUserBookPage from "../pages/Library/PublicUserBookPage";
+
 
 function AppRouter() {
 
@@ -55,7 +58,14 @@ function AppRouter() {
                             </ProtectedRoute>
                         }
                     />
-                    
+                    <Route
+                        path="/users/:userId"
+                        element={
+                            <ProtectedRoute>
+                                <PublicProfilePage />
+                            </ProtectedRoute>
+                        }
+                    />
                     <Route
                         path="/library"
                         element={
@@ -96,6 +106,10 @@ function AppRouter() {
                         }
                     />
 
+                    {<Route
+                        path="/users/:userId/books"
+                        element={<PublicUserBookPage />}
+                    />}
                     <Route
                         path="/explore/results"
                         element={

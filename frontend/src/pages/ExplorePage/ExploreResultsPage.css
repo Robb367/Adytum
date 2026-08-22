@@ -146,3 +146,234 @@
     color:
         rgba(230, 217, 198, 0.65);
 }
+
+.user-results-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(340px, 1fr));
+
+    gap: 20px;
+
+    max-width: 1100px;
+
+    margin-top: 36px;
+}
+
+.user-result-card {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 22px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.20);
+
+    background:
+        rgba(9, 7, 5, 0.72);
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.user-result-card:hover {
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(190, 156, 96, 0.55);
+
+    background:
+        rgba(14, 10, 7, 0.82);
+}
+
+.user-result-avatar {
+    width: 76px;
+    height: 76px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.32);
+
+    border-radius: 50%;
+
+    background:
+        rgba(7, 5, 4, 0.82);
+}
+
+.user-result-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.user-result-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--gold);
+
+    font-size: 1.4rem;
+}
+
+.user-result-info {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.user-result-info h2 {
+    margin: 0;
+
+    font-family: "Cinzel", serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+
+    color: #eee4d5;
+}
+
+.user-result-username {
+    margin: 4px 0 10px;
+
+    color:
+        rgba(238, 228, 213, 0.48);
+}
+
+.user-result-location {
+    margin: 0 0 8px;
+
+    color:
+        rgba(238, 228, 213, 0.66);
+}
+
+.user-result-books {
+    color: #c9ad78;
+
+    font-size: 0.9rem;
+}
+
+.user-result-open {
+    flex-shrink: 0;
+
+    color: var(--gold);
+
+    font-family: "Cinzel", serif;
+    font-size: 0.75rem;
+}
+
+.results-empty {
+    padding: 32px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.16);
+
+    color:
+        rgba(238, 228, 213, 0.58);
+}
+
+.results-error {
+    margin-top: 30px;
+
+    color: #c87f78;
+}
+
+@media (max-width: 700px) {
+
+    .user-results-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .user-result-open {
+        display: none;
+    }
+
+}
+
+.user-result-info {
+    min-width: 0;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+}
+
+.user-result-info h2 {
+    margin: 0;
+
+    font-family: "Cinzel", serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+
+    color: #eee4d5;
+}
+
+.user-result-username {
+    margin: 4px 0 12px;
+
+    color:
+        rgba(238, 228, 213, 0.48);
+}
+
+.user-result-location {
+    margin: 0 0 8px;
+
+    color:
+        rgba(238, 228, 213, 0.68);
+}
+
+.user-result-books {
+    margin: 0 0 16px;
+
+    color: #c9ad78;
+
+    font-size: 0.9rem;
+}
+
+.user-result-profile-button {
+    padding: 9px 16px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.45);
+
+    background:
+        rgba(185, 152, 95, 0.10);
+
+    color: var(--gold);
+
+    font-family: "Cinzel", serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.user-result-profile-button:hover {
+    background:
+        rgba(185, 152, 95, 0.20);
+
+    border-color: var(--gold);
+
+    transform: translateY(-1px);
+}

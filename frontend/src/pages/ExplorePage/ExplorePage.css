@@ -527,3 +527,53 @@
     color:
         rgba(225, 211, 192, 0.58);
 }
+
+.explore-search-type {
+    display: flex;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-bottom: 18px;
+}
+
+.explore-search-type button {
+    padding: 9px 18px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.25);
+
+    background:
+        rgba(8, 6, 5, 0.42);
+
+    color:
+        rgba(238, 228, 213, 0.55);
+
+    font-family: "Cinzel", serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.explore-search-type button:hover {
+    color: #d7bb87;
+
+    border-color:
+        rgba(190, 156, 96, 0.5);
+}
+
+.explore-search-type button.active {
+    background:
+        rgba(185, 152, 95, 0.16);
+
+    color: var(--gold);
+
+    border-color:
+        rgba(190, 156, 96, 0.62);
+}

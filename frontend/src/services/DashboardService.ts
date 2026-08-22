@@ -9,6 +9,19 @@ export interface RecentBook {
 
 }
 
+export interface DashboardViewPoint {
+    date: string;
+    views: number;
+}
+
+export interface MostViewedBook {
+    bookCopyId: number;
+    title: string;
+    author: string;
+    coverImageUrl: string | null;
+    views: number;
+}
+
 export interface DashboardResponse {
 
     totalBooks: number;
@@ -24,6 +37,10 @@ export interface DashboardResponse {
     searchRadiusKm: number;
     city: string | null;
     province: string | null;
+    mostViewedBook: MostViewedBook | null;
+    totalViews: number;
+    viewsLast30Days: number;
+    viewsByDay: DashboardViewPoint[];
 
 }
 
