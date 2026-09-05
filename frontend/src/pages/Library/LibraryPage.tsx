@@ -75,11 +75,22 @@ function LibraryPage() {
     }, [token]);
 
     if (loading) {
-        return <p>Caricamento...</p>;
+        return (
+            <p
+                role="status"
+                aria-live="polite"
+            >
+                Caricamento...
+            </p>
+        );
     }
 
     if (error) {
-        return <p>{error}</p>;
+        return (
+            <p role="alert">
+                {error}
+            </p>
+        );
     }
 
     const filteredBooks = books.filter((book) => {
@@ -141,6 +152,7 @@ function LibraryPage() {
                 <input
                     type="text"
                     value={searchTerm}
+                    aria-label="Cerca nella tua biblioteca"
                     placeholder="Cerca nella tua biblioteca..."
                     onChange={(event) =>
                         setSearchTerm(event.target.value)
@@ -173,7 +185,10 @@ function LibraryPage() {
                     filteredBooks.map((book) => {
 
                         const coverUrl =
-                            getImageUrl(book.coverImageUrl);
+                            getImageUrl(
+                                book.thumbnailImageUrl ??
+                                book.coverImageUrl
+                            );
 
                         const conditionLabel =
                             getBookConditionLabel(book.condition);
@@ -183,9 +198,28 @@ function LibraryPage() {
                             <article
                                 className="library-card"
                                 key={book.bookCopyId}
+                                role="link"
+                                tabIndex={0}
+                                aria-label={`Apri ${book.title} di ${book.author}`}
                                 onClick={() =>
-                                    navigate(`/books/${book.bookCopyId}`)
+                                    navigate(
+                                        `/books/${book.bookCopyId}`
+                                    )
                                 }
+                                onKeyDown={(event) => {
+
+                                    if (
+                                        event.key === "Enter" ||
+                                        event.key === " "
+                                    ) {
+                                        event.preventDefault();
+
+                                        navigate(
+                                            `/books/${book.bookCopyId}`
+                                        );
+                                    }
+
+                                }}
                             >
 
                                 <div className="library-cover">

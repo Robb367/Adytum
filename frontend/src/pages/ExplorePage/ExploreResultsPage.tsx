@@ -201,7 +201,9 @@ function ExploreResultsPage() {
 
             {loading ? (
 
-                <p className="results-loading">
+                <p className="results-loading" 
+                role="status" 
+                aria-live="polite">
 
                     {type === "users"
                         ? "Sto cercando tra i lettori di Adytum..."
@@ -212,7 +214,8 @@ function ExploreResultsPage() {
 
             ) : error ? (
 
-                <p className="results-error">
+                <p className="results-error"
+                role="alert">
                     {error}
                 </p>
 
@@ -249,11 +252,28 @@ function ExploreResultsPage() {
                                 <article
                                     key={user.userId}
                                     className="user-result-card"
+                                    role="link"
+                                    tabIndex={0}
+                                    aria-label={`Apri il profilo di ${user.displayName}`}
                                     onClick={() =>
                                         navigate(
                                             `/users/${user.userId}`
                                         )
                                     }
+                                    onKeyDown={(event) => {
+
+                                        if (
+                                            event.key === "Enter" ||
+                                            event.key === " "
+                                        ) {
+                                            event.preventDefault();
+
+                                            navigate(
+                                                `/users/${user.userId}`
+                                            );
+                                        }
+
+                                    }}
                                 >
 
                                     <div className="user-result-avatar">
@@ -354,7 +374,8 @@ function ExploreResultsPage() {
 
                             const cover =
                                 getImageUrl(
-                                    book.coverImageUrl
+                                    book.thumbnailImageUrl
+                                    ?? book.coverImageUrl 
                                 );
 
                             const nearby =
@@ -366,11 +387,28 @@ function ExploreResultsPage() {
                                 <article
                                     key={book.bookCopyId}
                                     className="result-card"
+                                    role="link"
+                                    tabIndex={0}
+                                    aria-label={`Apri ${book.title} di ${book.author}`}
                                     onClick={() =>
                                         navigate(
                                             `/books/${book.bookCopyId}`
                                         )
                                     }
+                                    onKeyDown={(event) => {
+
+                                        if (
+                                            event.key === "Enter" ||
+                                            event.key === " "
+                                        ) {
+                                            event.preventDefault();
+
+                                            navigate(
+                                                `/books/${book.bookCopyId}`
+                                            );
+                                        }
+
+                                    }}
                                 >
 
                                     <div className="result-cover">
@@ -379,7 +417,7 @@ function ExploreResultsPage() {
 
                                             <img
                                                 src={cover}
-                                                alt={book.title}
+                                                alt={`Copertina di ${book.title}`}
                                             />
 
                                         ) : (

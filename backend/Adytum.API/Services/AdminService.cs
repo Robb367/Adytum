@@ -44,6 +44,28 @@ public class AdminService : IAdminService
             })
             .ToListAsync();
 
+        var thirtyDaysAgo =
+            DateTime.UtcNow
+                .Date
+                .AddDays(-29);
+
+        var rawUsersByDay =
+            await _context.Users
+                .Where(u =>
+                    u.RegistrationDate >= thirtyDaysAgo
+                )
+                .GroupBy(u =>
+                    u.RegistrationDate.Date
+                )
+                .Select(g =>
+                    new
+                    {
+                        Date = g.Key,
+                        Count = g.Count()
+                    }
+                )
+                .ToListAsync();
+
         var recentBooks = await _context.BookCopies
             .Include(b => b.Book)
             .Include(b => b.Owner)
@@ -58,6 +80,52 @@ public class AdminService : IAdminService
             })
             .ToListAsync();
 
+        var rawBooksByDay =
+            await _context.BookCopies
+                .Where(b =>
+                    b.CreatedAt >= thirtyDaysAgo
+                )
+                .GroupBy(b =>
+                    b.CreatedAt.Date
+                )
+                .Select(g =>
+                    new
+                    {
+                        Date = g.Key,
+                        Count = g.Count()
+                    }
+                )
+                .ToListAsync();
+
+        var activityLast30Days =
+            Enumerable
+                .Range(0, 30)
+                .Select(i =>
+                {
+                    var date =
+                        thirtyDaysAgo.AddDays(i);
+
+                    var users =
+                        rawUsersByDay
+                            .FirstOrDefault(x =>
+                                x.Date == date
+                            );
+
+                    var books =
+                        rawBooksByDay
+                            .FirstOrDefault(x =>
+                                x.Date == date
+                            );
+
+                    return new AdminActivityPointDto
+                    {
+                        Date = date,
+                        NewUsers = users?.Count ?? 0,
+                        NewBooks = books?.Count ?? 0
+                    };
+                })
+                .ToList();
+
         return new AdminDashboardResponse
         {
             TotalUsers = totalUsers,
@@ -67,7 +135,8 @@ public class AdminService : IAdminService
             CompletedLoans = completedLoans,
             PendingRequests = pendingRequests,
             RecentUsers = recentUsers,
-            RecentBooks = recentBooks
+            RecentBooks = recentBooks,
+            ActivityLast30Days = activityLast30Days,
         };
     }
 }

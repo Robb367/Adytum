@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { login as loginRequest } from "../../../services/AuthService";
 import { useAuth } from "../../../contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 import "./LoginForm.css";
 
@@ -114,11 +115,12 @@ function LoginForm() {
 
                     </button>
 
-                    <button className="text-link">
-
+                    <Link
+                        to="/register"
+                        className="login-register-link"
+                    >
                         Registrati
-
-                    </button>
+                    </Link>
 
                     <button
                         className="text-link"

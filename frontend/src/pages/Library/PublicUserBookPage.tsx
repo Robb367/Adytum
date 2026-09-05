@@ -94,11 +94,24 @@ function PublicUserBookPage() {
 
 
     if (loading) {
-        return <p>Caricamento...</p>;
+        return (
+            <p
+                role="status"
+                aria-live="polite"
+            >
+                Caricamento...
+            </p>
+        );
     }
 
     if (error) {
-        return <p>{error}</p>;
+        return (
+            <p
+                role="alert"
+            >
+                {error}
+            </p>
+        );
     }
 
 
@@ -152,7 +165,8 @@ function PublicUserBookPage() {
 
                         const cover =
                             getImageUrl(
-                                book.coverImageUrl
+                                book.thumbnailImageUrl
+                                ?? book.coverImageUrl
                             );
 
                         return (
@@ -160,11 +174,28 @@ function PublicUserBookPage() {
                             <article
                                 key={book.bookCopyId}
                                 className="public-user-book-card"
+                                role="link"
+                                tabIndex={0}
+                                aria-label={`Apri ${book.title} di ${book.author}`}
                                 onClick={() =>
                                     navigate(
                                         `/books/${book.bookCopyId}`
                                     )
                                 }
+                                onKeyDown={(event) => {
+
+                                    if (
+                                        event.key === "Enter" ||
+                                        event.key === " "
+                                    ) {
+                                        event.preventDefault();
+
+                                        navigate(
+                                            `/books/${book.bookCopyId}`
+                                        );
+                                    }
+
+                                }}
                             >
 
                                 <div className="public-user-book-cover">

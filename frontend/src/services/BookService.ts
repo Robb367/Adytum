@@ -8,6 +8,7 @@ export interface LibraryBook {
     availableForLoan: boolean;
     condition: number;
     coverImageUrl: string | null;
+    thumbnailImageUrl: string | null;
 }
 
 export async function getMyLibrary(
@@ -149,6 +150,7 @@ export interface SearchBookResult {
     title: string;
     author: string;
     coverImageUrl: string | null;
+    thumbnailImageUrl: string | null;
     ownerDisplayName: string;
     city: string;
     availableForLoan: boolean;
@@ -160,6 +162,7 @@ export interface NearbyBook {
     title: string;
     author: string;
     coverImageUrl: string | null;
+    thumbnailImageUrl: string | null;
     ownerDisplayName: string;
     city: string;
     province: string;

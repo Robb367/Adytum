@@ -577,3 +577,12 @@
     border-color:
         rgba(190, 156, 96, 0.62);
 }
+
+.explore-search input:focus-visible,
+.explore-search button:focus-visible,
+.explore-search-type button:focus-visible,
+.explore-modes button:focus-visible,
+.explore-suggestion:focus-visible {
+    outline: 2px solid #d6b16d;
+    outline-offset: 3px;
+}

@@ -57,6 +57,9 @@ function ProfilePage() {
     const [isPublicProfile, setIsPublicProfile] =
         useState(true);
 
+    const [streetAddress, setStreetAddress] =
+        useState("");
+
     async function loadProfile() {
 
         if (!token) {
@@ -100,7 +103,9 @@ function ProfilePage() {
             setIsPublicProfile(
                 data.isPublicProfile
             );
-
+            setStreetAddress(
+                data.streetAddress ?? ""
+            );
         }
         catch (err) {
 
@@ -147,6 +152,7 @@ function ProfilePage() {
                     city,
                     province,
                     searchRadiusKm,
+                    streetAddress,
                     isPublicProfile
                 },
                 token
@@ -361,16 +367,32 @@ function ProfilePage() {
                         <p>
                             {
                                 profile.city ||
-                                profile.province
-                                    ? `${profile.city ?? ""}${
-                                        profile.city &&
+                                    profile.province
+                                    ? `${profile.city ?? ""}${profile.city &&
                                         profile.province
-                                            ? ", "
-                                            : ""
+                                        ? ", "
+                                        : ""
                                     }${profile.province ?? ""}`
                                     : "Località non impostata."
                             }
                         </p>
+
+                    </div>
+
+                    <div className="profile-section">
+
+                        <h2>
+                            Indirizzo
+                        </h2>
+
+                        <p>
+                            {profile.streetAddress ||
+                                "Indirizzo non impostato."}
+                        </p>
+
+                        <small className="profile-private-value">
+                            Visibile solo a te
+                        </small>
 
                     </div>
 
@@ -480,6 +502,42 @@ function ProfilePage() {
 
                     </div>
 
+                    <label className="profile-address-field">
+                        Indirizzo
+
+                        <input
+                            type="text"
+                            value={streetAddress}
+                            onChange={(event) =>
+                                setStreetAddress(
+                                    event.target.value
+                                )
+                            }
+                            placeholder="Via, numero civico..."
+                        />
+
+                        <small className="profile-field-note">
+                            Utilizzato solo per calcolare la posizione.
+                            Non viene mostrato agli altri utenti.
+                        </small>
+                    </label>
+
+                    <div className="profile-privacy-note">
+
+                        <h3>
+                            Privacy della posizione
+                        </h3>
+
+                        <p>
+                            Agli altri utenti vengono mostrate soltanto città,
+                            provincia e una distanza approssimativa per facilitare
+                            la ricerca di libri nelle vicinanze.
+                            L'indirizzo preciso e le coordinate utilizzate
+                            per il calcolo della distanza non vengono
+                            mostrati pubblicamente.
+                        </p>
+
+                    </div>
                     <label className="profile-bio-field">
                         Biografia
 
@@ -522,21 +580,39 @@ function ProfilePage() {
 
                     </label>
 
-                    <label className="profile-public">
+                    <div className="profile-public-setting">
 
-                        <input
-                            type="checkbox"
-                            checked={isPublicProfile}
-                            onChange={(event) =>
-                                setIsPublicProfile(
-                                    event.target.checked
-                                )
-                            }
-                        />
+                        <label className="profile-public">
 
-                        Profilo pubblico
+                            <input
+                                type="checkbox"
+                                checked={isPublicProfile}
+                                onChange={(event) =>
+                                    setIsPublicProfile(
+                                        event.target.checked
+                                    )
+                                }
+                            />
 
-                    </label>
+                            <span>
+                                Profilo pubblico
+                            </span>
+
+                        </label>
+
+                        <p>
+                            Se attivo, gli altri utenti possono trovare
+                            il tuo profilo, vedere la tua città o provincia
+                            e consultare i libri che rendi disponibili
+                            al prestito.
+                        </p>
+
+                        <p>
+                            Se disattivato, il profilo non viene mostrato
+                            nelle ricerche pubbliche e nella mappa.
+                        </p>
+
+                    </div>
 
                     {error && (
                         <p className="profile-error">

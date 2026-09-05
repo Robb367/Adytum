@@ -16,6 +16,7 @@ import AddBookPage from "../pages/Library/AddBookPage";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import PublicProfilePage from "../pages/ProfilePage/PublicProfilePage";
 import PublicUserBookPage from "../pages/Library/PublicUserBookPage";
+import AdminDashboardPage from "../pages/Admin/AdminDashboardPage";
 
 
 function AppRouter() {
@@ -106,6 +107,14 @@ function AppRouter() {
                         }
                     />
 
+                    <Route
+                        path="/admin"
+                        element={
+                            <ProtectedRoute>
+                                <AdminDashboardPage />
+                            </ProtectedRoute>
+                        }
+                    />
                     {<Route
                         path="/users/:userId/books"
                         element={<PublicUserBookPage />}

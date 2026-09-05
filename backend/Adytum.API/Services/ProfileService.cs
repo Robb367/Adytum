@@ -69,48 +69,92 @@ public class ProfileService : IProfileService
     }
 
     public async Task UpdateProfileAsync(
-     int userId,
-     UpdateProfileRequest request)
+    int userId,
+    UpdateProfileRequest request)
+{
+    var user =
+        await _context.Users.FindAsync(userId);
+
+    if (user == null)
     {
-        var user = await _context.Users.FindAsync(userId);
+        throw new NotFoundException(
+            "Utente non trovato."
+        );
+    }
 
-        if (user == null)
-            throw new NotFoundException("Utente non trovato.");
 
-        user.DisplayName = request.DisplayName;
-        user.Bio = request.Bio;
-        user.ProfilePictureUrl = request.ProfilePictureUrl;
-        user.City = request.City;
-        user.Province = request.Province;
-        user.StreetAddress = request.StreetAddress;
-        user.SearchRadiusKm = request.SearchRadiusKm;
-        user.IsPublicProfile = request.IsPublicProfile;
+    var locationChanged =
+        user.City != request.City ||
+        user.Province != request.Province ||
+        user.StreetAddress != request.StreetAddress;
 
-        if (!string.IsNullOrWhiteSpace(request.City))
+
+    user.DisplayName =
+        request.DisplayName;
+
+    user.Bio =
+        request.Bio;
+
+    user.ProfilePictureUrl =
+        request.ProfilePictureUrl;
+
+    user.City =
+        request.City;
+
+    user.Province =
+        request.Province;
+
+    user.StreetAddress =
+        request.StreetAddress;
+
+    user.SearchRadiusKm =
+        request.SearchRadiusKm;
+
+    user.IsPublicProfile =
+        request.IsPublicProfile;
+
+
+    if (
+        locationChanged &&
+        !string.IsNullOrWhiteSpace(request.City)
+    )
+    {
+        var coordinates =
+            await _geocodingService.GeocodeAsync(
+                request.City,
+                request.Province,
+                request.StreetAddress
+            );
+
+
+        if (!coordinates.HasValue)
         {
-            var coordinates =
+            coordinates =
                 await _geocodingService.GeocodeAsync(
                     request.City,
                     request.Province,
-                    request.StreetAddress
+                    null
                 );
-
-            if (coordinates.HasValue)
-            {
-                user.Latitude =
-                    coordinates.Value.Latitude;
-
-                user.Longitude =
-                    coordinates.Value.Longitude;
-            }
-            else
-            {
-                throw new BusinessRuleException(
-                    "Non è stato possibile trovare la località indicata."
-                );
-            }
         }
 
-        await _context.SaveChangesAsync();
+
+        if (coordinates.HasValue)
+        {
+            user.Latitude =
+                coordinates.Value.Latitude;
+
+            user.Longitude =
+                coordinates.Value.Longitude;
+        }
+        else
+        {
+            throw new BusinessRuleException(
+                "Non è stato possibile trovare la località indicata. " +
+                "Controlla città, provincia e indirizzo."
+            );
+        }
     }
-}
+
+
+    await _context.SaveChangesAsync();
+}}

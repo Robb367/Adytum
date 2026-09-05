@@ -9,4 +9,6 @@ public class RecentBookDto
     public string Author { get; set; } = "";
 
     public string? CoverImageUrl { get; set; }
+
+    public string? ThumbnailUrl { get; set; }
 }

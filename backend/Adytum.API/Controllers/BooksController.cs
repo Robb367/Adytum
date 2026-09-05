@@ -80,6 +80,32 @@ public class BooksController : ControllerBase
         return Ok(results);
     }
 
+    [HttpPost("{bookCopyId}/view")]
+    [Authorize]
+    public async Task<IActionResult> RegisterBookView(
+        int bookCopyId)
+    {
+        var userIdClaim =
+            User.FindFirstValue(
+                ClaimTypes.NameIdentifier
+            );
+
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        var viewerId =
+            int.Parse(userIdClaim);
+
+        await _bookService.RegisterBookViewAsync(
+            bookCopyId,
+            viewerId
+        );
+
+        return NoContent();
+    }
+
     [HttpPost("{bookCopyId}/cover")]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> UpdateBookCover(

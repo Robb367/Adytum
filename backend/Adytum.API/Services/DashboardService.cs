@@ -40,7 +40,10 @@ public class DashboardService : IDashboardService
 
         CoverImageUrl =
             b.CustomCoverImageUrl
-            ?? b.Book.CoverImageUrl
+            ?? b.Book.CoverImageUrl,
+
+        ThumbnailUrl =
+            b.ThumbnailImageUrl
     })
     .ToListAsync();
 

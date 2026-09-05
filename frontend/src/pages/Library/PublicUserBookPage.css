@@ -71,3 +71,16 @@
 
     font-size: 0.85rem;
 }
+
+.public-user-book-card:focus-visible,
+.public-user-books-back:focus-visible {
+    outline: 2px solid #d6b16d;
+    outline-offset: 3px;
+
+    border-color:
+        rgba(214, 177, 109, 0.8);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(214, 177, 109, 0.12);
+}

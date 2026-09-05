@@ -207,6 +207,7 @@ function ExplorePage() {
 
                         <button
                             type="button"
+                            aria-pressed={searchType === "books"}
                             className={
                                 searchType === "books"
                                     ? "active"
@@ -224,6 +225,7 @@ function ExplorePage() {
 
                         <button
                             type="button"
+                            aria-pressed={searchType === "users"}
                             className={
                                 searchType === "users"
                                     ? "active"
@@ -344,6 +346,7 @@ function ExplorePage() {
 
                                     <button
                                         type="button"
+                                        aria-pressed={mode === "all"}
                                         className={
                                             mode === "all"
                                                 ? "active"
@@ -361,6 +364,7 @@ function ExplorePage() {
 
                                     <button
                                         type="button"
+                                        aria-pressed={mode === "nearby"}
                                         className={
                                             mode === "nearby"
                                                 ? "active"

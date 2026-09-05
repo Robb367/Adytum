@@ -1,7 +1,9 @@
 namespace Adytum.API.DTOs.Admin;
+using System.Collections.Generic;
 
 public class AdminDashboardResponse
 {
+    public List<AdminActivityPointDto> ActivityLast30Days { get; set; } = new();
     public int TotalUsers { get; set; }
 
     public int TotalBooks { get; set; }

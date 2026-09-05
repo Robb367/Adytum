@@ -1,0 +1,519 @@
+.admin-dashboard-page {
+    min-height: calc(100vh - 68px);
+
+    padding: 42px 6% 80px;
+
+    color: var(--text);
+
+    background:
+        linear-gradient(rgba(5, 4, 3, 0.74),
+            rgba(5, 4, 3, 0.88)),
+        url("../../assets/explore-background.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.admin-dashboard-container {
+    max-width: 1500px;
+
+    margin: 0 auto;
+}
+
+.admin-dashboard-header {
+    max-width: 760px;
+
+    margin-bottom: 36px;
+}
+
+.admin-dashboard-header h1 {
+    margin: 7px 0 10px;
+
+    font-family: "Cinzel", serif;
+
+    font-size: 2.2rem;
+    font-weight: 500;
+
+    color: #eee4d5;
+}
+
+.admin-dashboard-header>p:last-child {
+    margin: 0;
+
+    color:
+        rgba(238, 228, 213, 0.58);
+
+    font-family: "Lora", serif;
+
+    line-height: 1.6;
+}
+
+
+/* KPI */
+
+.admin-dashboard-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 30px;
+}
+
+.admin-stat-card {
+    padding: 24px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.2);
+
+    background:
+        rgba(8, 6, 5, 0.62);
+
+    backdrop-filter: blur(5px);
+
+    box-shadow:
+        0 15px 30px rgba(0, 0, 0, 0.22);
+}
+
+.admin-stat-card span {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #d6b16d;
+
+    font-family: "Cinzel", serif;
+
+    font-size: 2rem;
+}
+
+.admin-stat-card h2 {
+    margin: 0 0 7px;
+
+    color: #eee4d5;
+
+    font-family: "Cinzel", serif;
+
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    letter-spacing: 0.07em;
+}
+
+.admin-stat-card p {
+    margin: 0;
+
+    color:
+        rgba(238, 228, 213, 0.5);
+
+    font-family: "Lora", serif;
+
+    font-size: 0.84rem;
+}
+
+
+/* COLONNE */
+
+.admin-dashboard-columns {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 24px;
+}
+
+.admin-panel {
+    padding: 26px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.18);
+
+    background:
+        rgba(8, 6, 5, 0.58);
+
+    backdrop-filter: blur(5px);
+}
+
+.admin-panel-heading {
+    margin-bottom: 20px;
+}
+
+.admin-panel-heading h2 {
+    margin: 5px 0 0;
+
+    font-family: "Cinzel", serif;
+
+    font-size: 1.25rem;
+    font-weight: 500;
+
+    color: #eee4d5;
+}
+
+
+/* LISTE */
+
+.admin-list {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.admin-list-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 16px 0;
+
+    border-bottom:
+        1px solid rgba(190, 156, 96, 0.12);
+}
+
+.admin-list-item:last-child {
+    border-bottom: none;
+}
+
+.admin-list-item-clickable {
+    cursor: pointer;
+
+    transition:
+        padding-left 0.2s ease,
+        background 0.2s ease;
+}
+
+.admin-list-item-clickable:hover {
+    padding-left: 8px;
+
+    background:
+        rgba(190, 156, 96, 0.04);
+}
+
+.admin-user-symbol,
+.admin-book-symbol {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.32);
+
+    border-radius: 50%;
+
+    color: #d6b16d;
+
+    background:
+        rgba(10, 7, 5, 0.8);
+}
+
+.admin-list-main {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.admin-list-main h3 {
+    margin: 0 0 4px;
+
+    color: #eee4d5;
+
+    font-family: "Cinzel", serif;
+
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.admin-list-main p {
+    margin: 0;
+
+    color:
+        rgba(238, 228, 213, 0.48);
+
+    font-size: 0.82rem;
+}
+
+.admin-list-item time {
+    flex-shrink: 0;
+
+    color:
+        rgba(238, 228, 213, 0.38);
+
+    font-size: 0.75rem;
+}
+
+.admin-empty {
+    color:
+        rgba(238, 228, 213, 0.46);
+}
+
+.admin-dashboard-status {
+    text-align: center;
+
+    color:
+        rgba(238, 228, 213, 0.65);
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+    .admin-dashboard-stats {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .admin-dashboard-columns {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .admin-dashboard-page {
+        padding: 28px 18px 60px;
+    }
+
+    .admin-dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-list-item time {
+        display: none;
+    }
+
+    .admin-dashboard-charts {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* GRAFICI */
+
+.admin-dashboard-charts {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 24px;
+
+    margin-bottom: 30px;
+}
+
+.admin-chart-card {
+    padding: 26px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.18);
+
+    background:
+        rgba(8, 6, 5, 0.58);
+
+    backdrop-filter: blur(5px);
+
+    box-shadow:
+        0 15px 32px rgba(0, 0, 0, 0.2);
+}
+
+.admin-chart-heading {
+    margin-bottom: 26px;
+}
+
+.admin-chart-heading h2 {
+    margin: 5px 0 6px;
+
+    font-family: "Cinzel", serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+
+    color: #eee4d5;
+}
+
+.admin-chart-heading>p:last-child {
+    margin: 0;
+
+    color:
+        rgba(238, 228, 213, 0.48);
+
+    font-family: "Lora", serif;
+
+    font-size: 0.82rem;
+}
+
+.admin-bar-chart {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.admin-bar-row {
+    width: 100%;
+}
+
+.admin-bar-label {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-bottom: 8px;
+}
+
+.admin-bar-label span {
+    color:
+        rgba(238, 228, 213, 0.68);
+
+    font-family: "Lora", serif;
+
+    font-size: 0.88rem;
+}
+
+.admin-bar-label strong {
+    color: #d6b16d;
+
+    font-family: "Cinzel", serif;
+
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.admin-bar-track {
+    height: 8px;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.15);
+
+    background:
+        rgba(3, 2, 2, 0.55);
+}
+
+.admin-bar-fill {
+    height: 100%;
+
+    min-width: 2px;
+
+    background:
+        linear-gradient(90deg,
+            rgba(116, 42, 34, 0.85),
+            rgba(198, 158, 91, 0.9));
+
+    box-shadow:
+        0 0 10px rgba(198, 158, 91, 0.14);
+
+    transition:
+        width 0.5s ease;
+}
+
+.admin-activity-chart-card {
+    margin-bottom: 30px;
+    padding: 26px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.18);
+
+    background:
+        rgba(8, 6, 5, 0.58);
+
+    backdrop-filter: blur(5px);
+}
+
+.admin-activity-chart {
+    width: 100%;
+    height: auto;
+
+    display: block;
+}
+
+.admin-chart-axis {
+    stroke:
+        rgba(190, 156, 96, 0.16);
+
+    stroke-width: 1;
+}
+
+.admin-chart-users-line,
+.admin-chart-books-line {
+    fill: none;
+
+    stroke-width: 2.5;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.admin-chart-users-line {
+    stroke: #c8a763;
+}
+
+.admin-chart-books-line {
+    stroke: #7b3a32;
+}
+
+.admin-activity-legend {
+    display: flex;
+
+    gap: 24px;
+
+    margin: 16px 0 18px;
+
+    font-family: "Cinzel", serif;
+
+    font-size: 0.76rem;
+}
+
+.admin-legend-users {
+    color: #c8a763;
+}
+
+.admin-legend-books {
+    color: #a96158;
+}
+
+.admin-chart-dates {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 8px;
+
+    color:
+        rgba(238, 228, 213, 0.4);
+
+    font-size: 0.75rem;
+}
+
+.admin-list-item-clickable:focus-visible {
+    outline: 2px solid #d6b16d;
+    outline-offset: 3px;
+
+    border-color:
+        rgba(214, 177, 109, 0.8);
+
+    box-shadow:
+        0 0 0 3px rgba(214, 177, 109, 0.12);
+}

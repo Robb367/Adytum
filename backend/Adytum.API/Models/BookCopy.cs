@@ -37,4 +37,6 @@ public class BookCopy
     public string? CustomDescription { get; set; }
 
     public string? CustomCoverImageUrl { get; set; }
+
+    public string? ThumbnailImageUrl { get; set; }
 }

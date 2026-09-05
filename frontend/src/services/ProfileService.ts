@@ -12,6 +12,7 @@ export interface ProfileResponse {
 
     city: string;
     province: string;
+    streetAddress: string;
 
     latitude: number;
     longitude: number;
@@ -35,9 +36,7 @@ export interface UpdateProfileRequest {
 
     city: string;
     province: string;
-
-    latitude: number;
-    longitude: number;
+    streetAddress: string;
 
     searchRadiusKm: number;
 
@@ -59,7 +58,7 @@ export async function updateProfile(
     token: string
 ): Promise<void> {
 
-    await put<{message: string}>(
+    await put<{ message: string }>(
         "/Profile",
         token,
         request

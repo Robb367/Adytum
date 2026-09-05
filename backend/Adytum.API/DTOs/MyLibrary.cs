@@ -15,4 +15,6 @@ public class MyLibrary
 
     public BookCopyCondition Condition { get; set; }
     public string? CoverImageUrl { get; set; }
+    public string? ThumbnailUrl { get; set; }
+
 }

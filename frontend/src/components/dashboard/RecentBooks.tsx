@@ -65,26 +65,46 @@ function RecentBooks({
 
                     {books.map((book) => {
 
-                        const coverImageUrl = getImageUrl(book.coverImageUrl);
-
+                        const coverUrl =
+                            getImageUrl(
+                                book.thumbnailImageUrl ??
+                                book.coverImageUrl
+                            );
                         return (
 
                             <article
                                 className="recent-book"
                                 key={book.bookCopyId}
+                                role="link"
+                                tabIndex={0}
+                                aria-label={`Apri ${book.title} di ${book.author}`}
                                 onClick={() =>
                                     navigate(
                                         `/books/${book.bookCopyId}`
                                     )
                                 }
+                                onKeyDown={(event) => {
+
+                                    if (
+                                        event.key === "Enter" ||
+                                        event.key === " "
+                                    ) {
+                                        event.preventDefault();
+
+                                        navigate(
+                                            `/books/${book.bookCopyId}`
+                                        );
+                                    }
+
+                                }}
                             >
 
                                 <div className="book-cover">
 
-                                    {coverImageUrl ? (
+                                    {coverUrl ? (
 
                                         <img
-                                            src={coverImageUrl}
+                                            src={coverUrl}
                                             alt={`Copertina di ${book.title}`}
                                         />
 

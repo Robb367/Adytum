@@ -6,10 +6,8 @@
     color: var(--text);
 
     background:
-        linear-gradient(
-            rgba(7, 5, 4, 0.78),
-            rgba(7, 5, 4, 0.88)
-        ),
+        linear-gradient(rgba(7, 5, 4, 0.78),
+            rgba(7, 5, 4, 0.88)),
         url("../../assets/book-details-background.png");
 
     background-size: cover;
@@ -48,7 +46,7 @@
     font-weight: 600;
 }
 
-.library-header > p:last-child {
+.library-header>p:last-child {
 
     margin-top: 12px;
 
@@ -330,4 +328,21 @@
         width: 100%;
     }
 
+}
+
+.library-card:focus-visible {
+    outline: 2px solid #d6b16d;
+    outline-offset: 3px;
+
+    border-color:
+        rgba(214, 177, 109, 0.8);
+
+    box-shadow:
+        0 0 0 3px rgba(214, 177, 109, 0.12);
+}
+
+.library-add-button:focus-visible,
+.library-search input:focus-visible {
+    outline: 2px solid #d6b16d;
+    outline-offset: 3px;
 }

@@ -10,6 +10,8 @@ public class BooksNearby
 
     public string? CoverImageUrl { get; set; }
 
+    public string? ThumbnailUrl { get; set; }
+
     public string OwnerDisplayName { get; set; } = string.Empty;
 
     public string City { get; set; } = string.Empty;

@@ -4,10 +4,45 @@ import { useAuth } from "../../contexts/AuthContext";
 
 import "./AppNavbar.css";
 
+function getRoleFromToken(
+    token: string | null
+): string | null {
+
+    if (!token) {
+        return null;
+    }
+
+    try {
+
+        const payload =
+            JSON.parse(
+                atob(
+                    token.split(".")[1]
+                )
+            );
+
+        return (
+            payload.role ??
+            payload[
+            "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+            ] ??
+            null
+        );
+
+    }
+    catch {
+
+        return null;
+
+    }
+}
+
 function AppNavbar() {
 
-    const { logout } = useAuth();
+    const { token, logout } = useAuth();
     const navigate = useNavigate();
+    const role = getRoleFromToken(token);
+    const isAdmin = role === "Admin";
 
     function handleLogout() {
 
@@ -72,6 +107,21 @@ function AppNavbar() {
                 >
                     Profilo
                 </NavLink>
+
+
+                {isAdmin && (
+
+                    <NavLink
+                        to="/admin"
+                        className={({ isActive }) =>
+                            isActive ? "active" : ""
+                        }
+                    >
+                        Admin
+                    </NavLink>
+
+                )}
+
 
             </nav>
 

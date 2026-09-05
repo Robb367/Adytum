@@ -6,6 +6,7 @@ export interface RecentBook {
     title: string;
     author: string;
     coverImageUrl: string | null;
+    thumbnailImageUrl: string | null;
 
 }
 

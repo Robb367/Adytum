@@ -6,11 +6,9 @@
     color: #f1eadf;
 
     background:
-        linear-gradient(
-            180deg,
+        linear-gradient(180deg,
             rgba(7, 5, 4, 0.9),
-            rgba(9, 7, 5, 0.97)
-        ),
+            rgba(9, 7, 5, 0.97)),
         url("../../assets/book-details-background.png");
 
     background-size: cover;
@@ -59,11 +57,9 @@
     border-radius: 50%;
 
     background:
-        radial-gradient(
-            circle at 30% 30%,
+        radial-gradient(circle at 30% 30%,
             rgba(185, 152, 95, 0.22),
-            rgba(24, 17, 12, 0.95)
-        );
+            rgba(24, 17, 12, 0.95));
 
     color: #d7bb87;
 
@@ -159,7 +155,7 @@
     margin: 0 auto 30px;
 }
 
-.profile-stats > div {
+.profile-stats>div {
     padding: 22px;
 
     text-align: center;
@@ -306,7 +302,7 @@
     margin-top: 24px;
 }
 
-.profile-radius > div {
+.profile-radius>div {
     display: flex;
     align-items: center;
     gap: 18px;
@@ -381,11 +377,9 @@
         1px solid rgba(121, 38, 34, 0.8);
 
     background:
-        linear-gradient(
-            180deg,
+        linear-gradient(180deg,
             #76241f,
-            #551714
-        );
+            #551714);
 
     color: #f2e7d6;
 }
@@ -476,4 +470,98 @@
         width: 100%;
     }
 
+}
+
+.profile-privacy-note,
+.profile-public-setting {
+    margin-top: 22px;
+    padding: 18px 20px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.18);
+
+    background:
+        rgba(8, 6, 5, 0.52);
+}
+
+.profile-privacy-note h3 {
+    margin: 0 0 10px;
+
+    font-family: "Cinzel", serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    color: #d6b16d;
+}
+
+.profile-privacy-note p,
+.profile-public-setting p {
+    margin: 6px 0 0;
+
+    color:
+        rgba(238, 228, 213, 0.58);
+
+    font-family: "Lora", serif;
+    font-size: 0.84rem;
+
+    line-height: 1.55;
+}
+
+.profile-public {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    cursor: pointer;
+}
+
+.profile-public span {
+    font-family: "Cinzel", serif;
+    color: #eee4d5;
+}
+
+.profile-field-note {
+    display: block;
+
+    margin-top: 7px;
+
+    color:
+        rgba(238, 228, 213, 0.46);
+
+    font-size: 0.76rem;
+
+    line-height: 1.45;
+}
+
+.profile-privacy-note {
+    margin-top: 20px;
+    padding: 18px 20px;
+
+    border:
+        1px solid rgba(190, 156, 96, 0.18);
+
+    background:
+        rgba(8, 6, 5, 0.48);
+}
+
+.profile-privacy-note h3 {
+    margin: 0 0 8px;
+
+    font-family: "Cinzel", serif;
+    font-size: 0.92rem;
+    font-weight: 500;
+
+    color: #d6b16d;
+}
+
+.profile-privacy-note p {
+    margin: 5px 0 0;
+
+    color:
+        rgba(238, 228, 213, 0.56);
+
+    font-size: 0.82rem;
+
+    line-height: 1.5;
 }
