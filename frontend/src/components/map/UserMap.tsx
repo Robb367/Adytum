@@ -162,9 +162,11 @@ function UserMap({
                     </Popup>
 
                 </Marker>
-
             ))}
+
             <Circle
+            // Il cerchio rappresenta graficamente il raggio configurato per la ricerca di utenti nelle vicinanze. 
+            // Leaflet richiede il raggio configurato in metri.
                 center={[
                     latitude,
                     longitude

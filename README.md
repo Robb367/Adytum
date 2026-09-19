@@ -116,11 +116,14 @@ Ripristinare le dipendenze:
 Avviare:
 
     dotnet run --launch-profile https
+    (può essere lanciato anche senza specificare profile, ma cambierà la porta)
 
 
 Swagger sarà disponibile all'indirizzo mostrato nel terminale, normalmente:
 
     https://localhost:7100/swagger
+    (cambiare la porta se si è lanciato senza il profile sopra)
+
 
 Se Windows si lamenta del certificato HTTPS locale:
 
@@ -142,6 +145,11 @@ Avviare Vite:
 
     npm run dev
 
+(se non dovesse funzionare, 
+& "C:\Program Files\nodejs\npm.cmd" install
+$env:Path += ";C:\Program Files\nodejs"
+& "C:\Program Files\nodejs\npm.cmd" run dev)
+
 
 Normalmente l'app sarà disponibile su:
 
@@ -152,14 +160,28 @@ Normalmente l'app sarà disponibile su:
 
 Per evitare di dover creare utenti da zero durante i test ci sono già vari account nel seed.
 
-**Utente di esempio**
+**Utenti di esempio**
 
 Tony Stark
     Email: tony@adytum.test
     Password: AdytumDemo123!
 
+Geralt di Rivia
+    Email: geralt@adytum.test
+    Password: AdytumDemo123!
+
+Bilbo Beggins
+    Email: bilbo@adytum.test
+    Password: AdytumDemo123!
+
+Lettore Privato
+    Email: private@adytum.test
+    Password: AdytumDemo123!
+
+
 **Admin**
 
+Amministratore Adytum
     Email: admin@adytum.test
     Password: AdytumDemo123!
 

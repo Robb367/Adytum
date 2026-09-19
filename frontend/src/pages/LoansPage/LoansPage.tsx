@@ -54,6 +54,7 @@ function LoansPage() {
             setLoading(true);
             setError("");
 
+            // Le richieste di prestito e inviate vengono caricate contemporaneamente per ottimizzare le performance (il tempo di attesa complessivo della pagina viene ridotto).
             const [
                 received,
                 sent

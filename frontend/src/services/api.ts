@@ -1,5 +1,8 @@
 const API_URL = "https://localhost:7100/api";
 
+//Wrapper centralizzato per le chiamate API al backend. 
+// Fornisce funzioni per i metodi HTTP comuni per la serializzazione JSON, JWT e gestione degli errori.
+
 export async function post<T>(
     endpoint: string,
     body: unknown
@@ -145,6 +148,9 @@ export async function remove(
         );
     }
 }
+
+//invia dati al backend utilizzando FormData, utilizzati ad esempio per le copertine.
+//Il content-type non deve essere impostato manualmente, poiché il browser lo gestisce automaticamente insieme al boundary.
 
 export async function postFormData(
     endpoint: string,

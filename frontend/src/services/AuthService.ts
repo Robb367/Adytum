@@ -21,7 +21,7 @@ export async function login(
     request: LoginRequest
 
 ): Promise<LoginResponse> {
-
+// Invia le credenziali al backend e restituisce il token JWT se il login ha successo.
     return await post<LoginResponse>(
         "/Users/login",
         request

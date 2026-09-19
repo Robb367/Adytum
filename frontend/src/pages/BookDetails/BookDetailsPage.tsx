@@ -94,6 +94,7 @@ function BookDetailsPage() {
         }
     }
 
+    // La richiesta di prestito associa la copia del libro selezionata a un prestito, specificando la data prevista di restituzione.
     async function handleRequestLoan() {
 
         if (!token || !book) {
@@ -195,7 +196,7 @@ function BookDetailsPage() {
                     );
 
                 setBook(data);
-
+                // Per non alterare i risultati della dashboard, viene registrata la visualizzazione solo se il libro non è di proprietà dell'utente corrente.
                 if (!data.isOwnedByCurrentUser) {
 
                     try {

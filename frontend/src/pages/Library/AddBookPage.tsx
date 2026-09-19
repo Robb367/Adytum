@@ -66,6 +66,9 @@ function AddBookPage() {
     const [error, setError] =
         useState("");
 
+    // Viene tentata la ricerca del libro su OpenLibrary tramite ISBN.
+    // Se il libro viene trovato, i campi del modulo vengono automaticamente compilati con i dati recuperati.
+    // Se il libro non viene trovato, l'utente può comunque inserire manualmente i dati.
     async function handleLookup() {
 
         if (!token || !isbn.trim()) {
@@ -156,7 +159,7 @@ function AddBookPage() {
 
             setSaving(true);
             setError("");
-
+            // Invia i metadati del libro al backend sia bibliografici che relativi alla copia personale, inclusa l'eventuale immagine di copertina.
             await addBookToLibrary(
                 {
                     isbn,

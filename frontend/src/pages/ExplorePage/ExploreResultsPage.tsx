@@ -68,7 +68,8 @@ function ExploreResultsPage() {
     const [error, setError] =
         useState("");
 
-
+// La ricerca dei risultati viene eseguita ogni volta che cambiano query, modalità o tipo di contenuto.
+// In modalità "nearby", la ricerca dei libri avviene in base alla posizione geografica dell'utente.
     useEffect(() => {
 
         async function loadResults() {

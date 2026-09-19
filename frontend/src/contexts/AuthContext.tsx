@@ -31,6 +31,7 @@ export function AuthProvider({
 
 }: AuthProviderProps) {
 
+    //Il token JWT viene conservato nel localStorage per manterere la sessione dopo i refresh della pagina.
     const [token, setToken] = useState<string | null>(() => {
 
         return localStorage.getItem("token");

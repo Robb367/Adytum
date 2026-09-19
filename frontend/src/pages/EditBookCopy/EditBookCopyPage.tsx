@@ -61,7 +61,7 @@ function EditBookCopyPage() {
     const [error, setError] =
         useState("");
 
-
+    // I dati ricevuti vengono copiati nello stato del form per permettere all'utente di modificarli senza alterare direttamente i dati originali del record condiviso.
     const [customTitle, setCustomTitle] =
         useState("");
 

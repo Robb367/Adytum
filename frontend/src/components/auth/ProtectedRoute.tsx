@@ -17,7 +17,7 @@ function ProtectedRoute({
 }:ProtectedRouteProps){
 
     const { token } = useAuth();
-
+//Le rotte protette richiedono un token JWT valido. Se non è presente, l'utente viene reindirizzato alla pagina di login.
     if(!token){
 
         return <Navigate to="/login" replace />;
