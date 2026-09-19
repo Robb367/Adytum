@@ -89,7 +89,10 @@ function AdminDashboardPage() {
         return (
             <main className="admin-dashboard-page">
 
-                <p className="admin-dashboard-status">
+                <p className="admin-dashboard-status" 
+                role="status" 
+                aria-live="polite">
+                    
                     Caricamento...
                 </p>
 
@@ -104,7 +107,9 @@ function AdminDashboardPage() {
         return (
             <main className="admin-dashboard-page">
 
-                <p className="admin-dashboard-status">
+                <p className="admin-dashboard-status"
+                role="alert">
+                    
                     {error}
                 </p>
 

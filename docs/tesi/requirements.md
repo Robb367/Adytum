@@ -23,6 +23,6 @@ j_Il sistema deve avere un sistema di recensioni in modo da permettere agli uten
 
 a_L'app dev'essere intuitiva e fluida
 b_L'app deve essere moderna e con un design che si allinei al suo scopo
-c_Le password devono essere salvate in modo sicuro, usando metodi di cifratura sicuri
+c_Le password devono essere salvate in modo sicuro, usando metodi di cifratura sicuri (HASH)
 d_I dati degli utenti vanno trattati nel completo rispetto della privacy e della normativa GDPR vigente
-e_colori blu e oro
+e_colori rosso e oro

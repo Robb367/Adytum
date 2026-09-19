@@ -39,9 +39,9 @@ BEGIN TRY
     -- 0 = User
     -- 1 = Admin
     --
-    -- Password demo:
+    -- Password demo prevista:
     -- AdytumDemo123!
-  
+
 
     SET IDENTITY_INSERT [Users] ON;
 
@@ -73,7 +73,7 @@ BEGIN TRY
         N'admin@adytum.test',
 
         -- Password: AdytumDemo123!
-        N'$2b$12$s4Z4svRJXDjdJq7/pb.XB.dM7bDKstq1uRlhbdPTsHcLbKG9wz6TC',
+        N'$2a$11$b/jx5diVhKlsiUVkv3CsTuxdIe1YEN9zzczjlAuiw4c6ucYei1vXS',
 
         NULL,
         N'Amministratore Adytum',
@@ -94,10 +94,10 @@ BEGIN TRY
         1002,
         N'bilbo.books',
         N'bilbo@adytum.test',
-        N'$2b$12$s4Z4svRJXDjdJq7/pb.XB.dM7bDKstq1uRlhbdPTsHcLbKG9wz6TC',
+        N'$2a$11$b/jx5diVhKlsiUVkv3CsTuxdIe1YEN9zzczjlAuiw4c6ucYei1vXS',
         NULL,
         N'Bilbo Baggins',
-        N'Lettore di fantasy, narrativa e classici. Mi piace dare una seconda vita ai libri che ho già letto.',
+        N'Non tutti quelli che vagano sono perduti.',
         N'Schio',
         N'VI',
         NULL,
@@ -114,10 +114,10 @@ BEGIN TRY
         1003,
         N'tonystark.reads',
         N'tony@adytum.test',
-        N'$2b$12$s4Z4svRJXDjdJq7/pb.XB.dM7bDKstq1uRlhbdPTsHcLbKG9wz6TC',
+        N'$2a$11$b/jx5diVhKlsiUVkv3CsTuxdIe1YEN9zzczjlAuiw4c6ucYei1vXS',
         NULL,
-        N'Tony STark',
-        N'Lettore di fantascienza, distopie e qualche classico.',
+        N'Tony Stark',
+        N'Un genio, miliardario, playboy, filantropo... e Avenger.',
         N'Thiene',
         N'VI',
         NULL,
@@ -134,10 +134,10 @@ BEGIN TRY
         1004,
         N'geralt.library',
         N'geralt@adytum.test',
-        N'$2b$12$s4Z4svRJXDjdJq7/pb.XB.dM7bDKstq1uRlhbdPTsHcLbKG9wz6TC',
+        N'$2a$11$b/jx5diVhKlsiUVkv3CsTuxdIe1YEN9zzczjlAuiw4c6ucYei1vXS',
         NULL,
         N'Geralt Di Rivia',
-        N'Colleziono narrativa gotica, classici e fantasy.',
+        N'Se devo scegliere tra un male e un altro, preferisco non scegliere affatto.',
         N'Santorso',
         N'VI',
         NULL,
@@ -154,7 +154,7 @@ BEGIN TRY
         1005,
         N'private.reader',
         N'private@adytum.test',
-        N'$2b$12$s4Z4svRJXDjdJq7/pb.XB.dM7bDKstq1uRlhbdPTsHcLbKG9wz6TC',
+        N'$2a$11$b/jx5diVhKlsiUVkv3CsTuxdIe1YEN9zzczjlAuiw4c6ucYei1vXS',
         NULL,
         N'Lettore Privato',
         N'Profilo utilizzato per verificare le funzionalità di privacy.',
@@ -167,7 +167,7 @@ BEGIN TRY
         DATEADD(DAY, -15, SYSUTCDATETIME()),
         1,
 
-        -- Profilo NON pubblico
+        -- Profilo NON pubblico: usato per verificare privacy e discovery
         0,
 
         0
@@ -179,8 +179,12 @@ BEGIN TRY
     ------------------------------------------------------------
     -- BOOKS
     ------------------------------------------------------------
-    -- Gli ISBN DEMO-* sono volutamente sintetici:
-    -- servono al dataset locale e non simulano ISBN reali.
+    -- Catalogo bibliografico condiviso.
+    -- Ogni record rappresenta un'opera; le singole copie possedute dagli utenti vengono invece inserite nella tabella BookCopies.
+
+    -- Gli ISBN DEMO-* sono volutamente sintetici e vengono usati esclusivamente per il dataset dimostrativo.
+
+    -- CoverImageUrl contiene la copertina generale dell'opera.
     ------------------------------------------------------------
 
     SET IDENTITY_INSERT [Books] ON;
@@ -202,6 +206,7 @@ BEGIN TRY
     )
     VALUES
 
+    -- 1984
     (
         2001,
         N'DEMO-0001',
@@ -214,9 +219,10 @@ BEGIN TRY
         N'Distopia',
         NULL,
         N'Romanzo distopico ambientato in una società sottoposta a un controllo pervasivo.',
-        NULL
+        N'https://www.newtoncompton.com/files/cache/bookimages/19178/1984-x1000.jpg'
     ),
 
+    -- Frankenstein
     (
         2002,
         N'DEMO-0002',
@@ -229,9 +235,10 @@ BEGIN TRY
         N'Gotico',
         NULL,
         N'Classico della narrativa gotica sul rapporto tra creazione, responsabilità e isolamento.',
-        NULL
+        N'https://m.media-amazon.com/images/I/710p9SUfZtL._AC_UF1000,1000_QL80_.jpg'
     ),
 
+    -- Dracula
     (
         2003,
         N'DEMO-0003',
@@ -244,9 +251,10 @@ BEGIN TRY
         N'Gotico',
         NULL,
         N'Romanzo epistolare diventato uno dei riferimenti fondamentali della narrativa gotica.',
-        NULL
+        N'https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781476788104/dracula-9781476788104_hr.jpg'
     ),
 
+    -- Dune
     (
         2004,
         N'DEMO-0004',
@@ -259,9 +267,10 @@ BEGIN TRY
         N'Fantascienza',
         NULL,
         N'Romanzo di fantascienza ambientato sul pianeta desertico Arrakis.',
-        NULL
+        N'https://m.media-amazon.com/images/I/913padSawdL._AC_UF1000,1000_QL80_.jpg'
     ),
 
+    -- Fahrenheit 451
     (
         2005,
         N'DEMO-0005',
@@ -274,9 +283,10 @@ BEGIN TRY
         N'Distopia',
         NULL,
         N'Romanzo distopico incentrato sulla censura e sul valore della conoscenza.',
-        NULL
+        N'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6dgF5bzKHkQY0C-AaKJDzKCMZ--bMpfhKiLHzuXF_uY29m-tlfqdtiEeg&s=10'
     ),
 
+    -- Orgoglio e pregiudizio
     (
         2006,
         N'DEMO-0006',
@@ -289,9 +299,10 @@ BEGIN TRY
         N'Classico',
         NULL,
         N'Romanzo classico dedicato ai rapporti sociali, familiari e sentimentali.',
-        NULL
+        N'https://m.media-amazon.com/images/I/71CgbSAOOVL._AC_UF1000,1000_QL80_.jpg'
     ),
 
+    -- Il nome della rosa
     (
         2007,
         N'DEMO-0007',
@@ -304,9 +315,10 @@ BEGIN TRY
         N'Romanzo storico',
         NULL,
         N'Romanzo storico e investigativo ambientato in un monastero medievale.',
-        NULL
+        N'https://m.media-amazon.com/images/I/71o85G2CkyL._AC_UF1000,1000_QL80_.jpg'
     ),
 
+    -- Il Signore degli Anelli
     (
         2008,
         N'DEMO-0008',
@@ -319,7 +331,7 @@ BEGIN TRY
         N'Fantasy',
         NULL,
         N'Opera fantasy ambientata nella Terra di Mezzo.',
-        NULL
+        N'https://img.illibraio.it/images/9788845294044_92_1000_0_75.jpg'
     );
 
     SET IDENTITY_INSERT [Books] OFF;
@@ -328,12 +340,16 @@ BEGIN TRY
     ------------------------------------------------------------
     -- BOOK COPIES
     ------------------------------------------------------------
+    -- Ogni record rappresenta una copia fisica posseduta da un utente.
+
     -- BookCopyCondition:
     -- 0 = Excellent
     -- 1 = Good
     -- 2 = Fair
     -- 3 = Poor
     -- 4 = Damaged
+
+    -- Per il dataset demo ThumbnailImageUrl usa la stessa immagine della copertina generale. Nell'applicazione reale le miniature generate da ImageSharp vengono invece salvate separatamente.
     ------------------------------------------------------------
 
     SET IDENTITY_INSERT [BookCopies] ON;
@@ -359,100 +375,141 @@ BEGIN TRY
     )
     VALUES
 
-    -- Elena
+    ------------------------------------------------------------
+    -- BILBO BAGGINS - biblioteca personale
+    ------------------------------------------------------------
+
+    -- 1984
     (
         3001, 2001, 1002,
         1, 1,
         N'Edizione tenuta molto bene.',
         DATEADD(DAY, -40, SYSUTCDATETIME()),
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        N'https://www.newtoncompton.com/files/cache/bookimages/19178/1984-x1000.jpg'
     ),
 
+    -- Frankenstein
     (
         3002, 2002, 1002,
         0, 1,
         N'Una delle mie edizioni preferite.',
         DATEADD(DAY, -35, SYSUTCDATETIME()),
-        NULL, NULL, NULL, NULL, N'Gotico', NULL, NULL, NULL, NULL
+        NULL, NULL, NULL, NULL, N'Gotico', NULL, NULL, NULL,
+        N'https://m.media-amazon.com/images/I/710p9SUfZtL._AC_UF1000,1000_QL80_.jpg'
     ),
 
+    -- Il Signore degli Anelli - non disponibile al prestito
     (
         3003, 2008, 1002,
         1, 0,
         N'Attualmente non disponibile.',
         DATEADD(DAY, -22, SYSUTCDATETIME()),
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        N'https://img.illibraio.it/images/9788845294044_92_1000_0_75.jpg'
     ),
 
-    -- Marco
+    ------------------------------------------------------------
+    -- TONY STARK - biblioteca personale
+    ------------------------------------------------------------
+
+    -- 1984 - seconda copia della stessa opera
     (
         3004, 2001, 1003,
         2, 1,
         N'Qualche segno sulla copertina.',
         DATEADD(DAY, -28, SYSUTCDATETIME()),
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        N'https://www.newtoncompton.com/files/cache/bookimages/19178/1984-x1000.jpg'
     ),
 
+    -- Dune
     (
         3005, 2004, 1003,
         1, 1,
         NULL,
         DATEADD(DAY, -20, SYSUTCDATETIME()),
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        N'https://m.media-amazon.com/images/I/913padSawdL._AC_UF1000,1000_QL80_.jpg'
     ),
 
+    -- Fahrenheit 451
     (
         3006, 2005, 1003,
         0, 1,
         NULL,
         DATEADD(DAY, -12, SYSUTCDATETIME()),
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        N'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6dgF5bzKHkQY0C-AaKJDzKCMZ--bMpfhKiLHzuXF_uY29m-tlfqdtiEeg&s=10'
     ),
 
-    -- Giulia
+    ------------------------------------------------------------
+    -- GERALT DI RIVIA - biblioteca personale
+    ------------------------------------------------------------
+
+    -- Dracula
     (
         3007, 2003, 1004,
         1, 1,
         N'Edizione con alcune annotazioni a matita.',
         DATEADD(DAY, -18, SYSUTCDATETIME()),
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        N'https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781476788104/dracula-9781476788104_hr.jpg'
     ),
 
+    -- Orgoglio e pregiudizio
     (
         3008, 2006, 1004,
         1, 1,
         NULL,
         DATEADD(DAY, -10, SYSUTCDATETIME()),
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        N'https://m.media-amazon.com/images/I/71CgbSAOOVL._AC_UF1000,1000_QL80_.jpg'
     ),
 
+    -- Il nome della rosa
     (
         3009, 2007, 1004,
         0, 1,
         N'Copertina rigida.',
         DATEADD(DAY, -6, SYSUTCDATETIME()),
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        N'https://m.media-amazon.com/images/I/71o85G2CkyL._AC_UF1000,1000_QL80_.jpg'
     ),
 
-    -- Admin
+    ------------------------------------------------------------
+    -- ADMIN - copia dimostrativa
+    ------------------------------------------------------------
+
+    -- Dune
     (
         3010, 2004, 1001,
         1, 1,
         N'Copia dimostrativa.',
         DATEADD(DAY, -5, SYSUTCDATETIME()),
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        N'https://m.media-amazon.com/images/I/913padSawdL._AC_UF1000,1000_QL80_.jpg'
     ),
 
-    -- Profilo privato
+    ------------------------------------------------------------
+    -- PROFILO PRIVATO - utilizzato per i test di privacy
+    ------------------------------------------------------------
+
+    -- Fahrenheit 451
     (
         3011, 2005, 1005,
         1, 1,
         N'Copia appartenente a un profilo non pubblico.',
         DATEADD(DAY, -4, SYSUTCDATETIME()),
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        N'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6dgF5bzKHkQY0C-AaKJDzKCMZ--bMpfhKiLHzuXF_uY29m-tlfqdtiEeg&s=10'
     ),
 
-    -- Seconda copia dello stesso libro
+    ------------------------------------------------------------
+    -- SECONDA COPIA DI FRANKENSTEIN
+    -- Dimostra l'uso dei metadati personalizzati di BookCopy.
+    ------------------------------------------------------------
+
     (
         3012, 2002, 1004,
         2, 1,
@@ -466,10 +523,11 @@ BEGIN TRY
         NULL,
         NULL,
         NULL,
-        NULL
+        N'https://m.media-amazon.com/images/I/710p9SUfZtL._AC_UF1000,1000_QL80_.jpg'
     );
 
     SET IDENTITY_INSERT [BookCopies] OFF;
+
 
 
     ------------------------------------------------------------

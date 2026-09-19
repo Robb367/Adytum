@@ -31,7 +31,7 @@ Queste funzionalità mirano a migliorare l'esperienza utente ma non sono stretta
 
 # Possibili evoluzioni (ver. 2.0)
 
-Queste funzionalità saranno valutate in futuro per l'implementazione
+Queste funzionalità saranno valutate in futuro se deciderò di renderla pubblica
 
 | ID      | Funzionalità                    |
 | ------- | ------------------------------- |
