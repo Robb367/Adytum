@@ -170,7 +170,7 @@ Geralt di Rivia
     Email: geralt@adytum.test
     Password: AdytumDemo123!
 
-Bilbo Beggins
+Bilbo Baggins
     Email: bilbo@adytum.test
     Password: AdytumDemo123!
 
